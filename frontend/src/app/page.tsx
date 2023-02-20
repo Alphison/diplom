@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Model from "../../components/model"
+import Model from "../../components/model/model";
 
 const Page = () => {
     return (
@@ -33,7 +33,9 @@ const Page = () => {
                 </div>
             </div>
             <div className="home">
-                <Model />
+                <div className="canvas">
+                    <Model />
+                </div>
                 <h1 className="h1-home">
                     SCHOOLPOLI
                 </h1>

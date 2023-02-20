@@ -83,12 +83,19 @@
 // }
 //
 // init();
+"use client"
+import {Canvas} from "@react-three/fiber";
+import { OrbitControls } from '@react-three/drei'
+import Box from "./box";
 
 const Model = () => {
     return (
-        <>
-            <canvas className={'canvas'}></canvas>
-        </>
+        <Canvas camera={{position: [0, 0, 370]}}>
+            <ambientLight intensity={0.1}/>
+            <directionalLight color={'red'} position={[0, 0 , 5]}/>
+            <Box position={[0, 45, 0]}/>
+            <OrbitControls enableZoom={false}/>
+        </Canvas>
     )
 }
 
