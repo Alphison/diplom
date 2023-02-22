@@ -1,7 +1,12 @@
+'use client'
+
 import React from "react";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 const Header: React.FC = () => {
+
     return (
         <header className="header">
             <div className="header__inner">
@@ -42,9 +47,9 @@ const Header: React.FC = () => {
                             </a>
                         </div>
                     </div>
-                    <a className="btn-auth__header" href="?auth">
+                    <Link className="btn-auth__header" href={'/auth'}>
                         войти
-                    </a>
+                    </Link>
                     <div className="burger">
                         <div className="burger-el"></div>
                         <div className="burger-el"></div>

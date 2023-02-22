@@ -86,15 +86,25 @@
 "use client"
 import {Canvas} from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei'
+import * as THREE from 'three'
 import Box from "./box";
+import {Suspense} from "react";
 
 const Model = () => {
     return (
-        <Canvas camera={{position: [0, 0, 370]}}>
+        <Canvas gl={{ alpha: true,
+            antialias: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            outputEncoding: THREE.sRGBEncoding,
+            toneMappingExposure: 1.25 }}
+                camera={{position: [0, 0, 370]}}
+        >
             <ambientLight intensity={0.1}/>
-            <directionalLight color={'red'} position={[0, 0 , 5]}/>
-            <Box position={[0, 45, 0]}/>
-            <OrbitControls enableZoom={false}/>
+            <pointLight color={'0xffffff'} position={[200, 200 , 200]} intensity={1}/>
+            <Suspense fallback={false}>
+                <Box position={[0, 45, 0]}/>
+            </Suspense>
+            <OrbitControls enableZoom={false} autoRotate={true}/>
         </Canvas>
     )
 }
