@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6c0f601-f3ef-40d0-8026-7a1463d75150" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/public/brown_photostudio_02_4k.hdr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/auth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/model/box.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/model/box.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/model/model.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/model/model.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/favicon.ico" beforeDir="false" />
-    </list>
+    <list default="true" id="b6c0f601-f3ef-40d0-8026-7a1463d75150" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -181,6 +173,7 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\OSPanel\domains\диплом\frontend\src\pages" />
+      <recent name="C:\OSPanel\domains\диплом\frontend\src\pages\auth" />
       <recent name="C:\OSPanel\domains\диплом\frontend\src\app\Auth" />
       <recent name="C:\OSPanel\domains\диплом\frontend\components\model" />
     </key>
@@ -197,7 +190,7 @@
       <workItem from="1676811662737" duration="16329000" />
       <workItem from="1676910660029" duration="6790000" />
       <workItem from="1677008238139" duration="3633000" />
-      <workItem from="1677050342473" duration="8776000" />
+      <workItem from="1677050342473" duration="9049000" />
     </task>
     <servers />
   </component>
