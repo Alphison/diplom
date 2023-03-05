@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('data');
-            $table->integer('count_lesson');
-            $table->foreignId('id_prepod')->constrained();
+            $table->bigInteger('count_lesson')->unsigned();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('profession');
             $table->string('img_course');
             $table->string('goal');
-            $table->integer('price');
+            $table->bigInteger('price')->unsigned();
             $table->timestamps();
         });
     }

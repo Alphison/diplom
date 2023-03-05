@@ -9,21 +9,18 @@
     font-family: "Bruno";
     src: url('../../assets/fonts/BrunoAceRegular.ttf');
 }
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 a{
     text-decoration: none;
 }
 body{
+    background: linear-gradient(124.4deg, #39027E 19.08%, #3A0083 45.02%, #0C001B 100%) !important;
     position: relative;
     background: #22242A;
     overflow-x: hidden;
 }
 .error{
     color: rgb(255, 49, 49);
-    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-weight: 400;
     margin: 10px 0;
@@ -31,7 +28,6 @@ body{
 .success{
     z-index: 10;
     color: rgb(153, 255, 153);
-    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-weight: 400;
     margin: 10px 0;
@@ -43,7 +39,6 @@ body{
 }
 .message{
     margin-top: 50px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -74,7 +69,6 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
 }
 .del_modal_inner h1{
     width: 300px;
@@ -87,7 +81,6 @@ body{
     background: green;
     border-radius: 3px;
     padding: 10px 20px;
-    font-family: 'Roboto', sans-serif;
     font-size: 20px;
     color: white;
     transition: 0.3s;
@@ -107,7 +100,6 @@ body{
     background: rgb(219, 12, 12);
     border-radius: 3px;
     padding: 10px 20px;
-    font-family: 'Roboto', sans-serif;
     font-size: 20px;
 }
 .no:hover{
@@ -123,21 +115,43 @@ body{
     visibility: visible;
 }
 /* slider */
+.mySwiper {
+    width: 1300px !important;
+    height: 100%;
+    margin-top: 48px;
+}
+.swiper-wrapper{
+    display: flex;
+    align-items: center;
+}
+.swiper-slide{
+    display: flex;
+    gap: 24px;
+    width: 100% !important;
+}
 .swiper-pagination{
-    bottom: 0 !important;
+    margin-top: 48px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
 }
 .swiper-pagination-bullet{
-    width: 25px !important;
-    height: 25px !important;
-    background: #D9D9D9 !important;
-    margin: 0 10px !important;
+    width: 24px;
+    height: 24px;
+    border: 1px solid white;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+.swiper-pagination-bullet:hover{
+    background: #5033D3;
+    border: 1px solid #5033D3;
 }
 .swiper-pagination-bullet-active{
-    background: #5840EA !important;
+    background: #5033D3;
+    border: 1px solid #5033D3;
 }
-.swiper{
-    width: 100%;
-    height: 800px;
+.block-course{
+    width: 635px;
 }
 /*preloader*/
 .preloader{
@@ -153,7 +167,6 @@ body{
 }
 .preloader h1{
     font-size: 60px;
-    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: white;
 }
@@ -226,7 +239,6 @@ header{
     position: absolute;
     display:grid;
     grid-template-columns: 1fr 2fr 1fr;
-    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 .buttons__block{
@@ -259,7 +271,6 @@ header{
     justify-content: flex-end;
 }
 .btn-auth__burger{
-    font-family: 'Roboto', sans-serif;
     color: white;
     font-size: 18px;
 }
@@ -292,7 +303,6 @@ header .menu-el::after{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -316,7 +326,6 @@ header .menu-el::after{
     transition: 0.3s;
 }
 .home{
-    background: linear-gradient(124.4deg, #39027E 19.08%, #0C001B 100%);
     padding-bottom: 266px;
     position: relative;
     overflow: hidden;
@@ -384,7 +393,6 @@ header .menu-el::after{
     border-radius: 100px;
 }
 .blocks-course{
-    position: relative;
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
@@ -392,8 +400,8 @@ header .menu-el::after{
 }
 .block-course{
     position: relative;
-    background: #1C1C1C;
-    border-radius: 6px;
+    background: #272727;
+    border-radius: 24px;
     overflow: hidden;
 }
 .block-course:hover .img_block-course img{
@@ -417,7 +425,6 @@ header .menu-el::after{
 .name-course{
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: calc(35px + 5 * (100vw / 1300));;
@@ -430,7 +437,6 @@ header .menu-el::after{
     margin-top: 16px;
     display: flex;
     gap: 30px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(14px + 4 * (100vw / 1300));;
@@ -444,7 +450,6 @@ header .menu-el::after{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 16px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(14px + 4 * (100vw / 1300));;
@@ -458,7 +463,6 @@ header .menu-el::after{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 25px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: calc(25px + 5 * (100vw / 1300));;
@@ -470,12 +474,11 @@ header .menu-el::after{
 .more-course{
     text-align: center;
     background: #5840EA;
-    border-radius: 3px;
+    border-radius: 16px;
     margin-top: 29px;
     width: 100%;
     display: inline-block;
     padding: 13px 0;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -495,7 +498,6 @@ header .menu-el::after{
     padding: 35px 55px;
     border: 1px solid #FFFFFF;
     border-radius: 3px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(15px + 15 * (100vw / 1300));
@@ -514,7 +516,6 @@ header .menu-el::after{
     flex-wrap: wrap;
 }
 .name-block__benefits{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 25px;
@@ -525,7 +526,6 @@ header .menu-el::after{
 .text-block__benefits{
     width: 384px;
     margin-top: 25px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -566,7 +566,6 @@ header .menu-el::after{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 14px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 30px;
@@ -578,7 +577,6 @@ header .menu-el::after{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 5px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -607,7 +605,6 @@ header .menu-el::after{
     width: 100%;
 }
 .h1__questions{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 100px;
@@ -617,7 +614,6 @@ header .menu-el::after{
     margin-bottom: 10px;
 }
 .text__questions{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: calc(15px + 10 * (100vw / 1300));
@@ -733,7 +729,6 @@ header .menu-el::after{
     transform: translateY(0);
 }
 .h1__modal-form{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 50px;
@@ -954,7 +949,6 @@ header .menu-el::after{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 76px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: calc(30px + 70 * (100vw / 1300));
@@ -971,7 +965,6 @@ header .menu-el::after{
     text-overflow: ellipsis;
     width: 552px;
     margin-top: 28px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(15px + 5 * (100vw / 1300));
@@ -1029,7 +1022,6 @@ header .menu-el::after{
     height: 9px;
 }
 .text-col_home-course{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -1043,10 +1035,9 @@ header .menu-el::after{
     margin-top: 150px;
 }
 .zag{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: calc(25px + 30 * (100vw / 1300));
+    font-size: calc(25px + 23 * (100vw / 1300));
     line-height: 94px;
     /* identical to box height */
 
@@ -1056,7 +1047,6 @@ header .menu-el::after{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 50px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(15px + 15 * (100vw / 1300));
@@ -1090,7 +1080,6 @@ hr{
     object-fit: cover;
 }
 .name__prepod{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 40px;
@@ -1100,7 +1089,6 @@ hr{
 }
 .text__prepod{
     width: 650px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: calc(15px + 15 * (100vw / 1300));
@@ -1115,7 +1103,6 @@ hr{
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 50px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(15px + 15 * (100vw / 1300));
@@ -1137,7 +1124,6 @@ hr{
     gap: 20px;
 }
 .name-column__plan{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(15px + 5 * (100vw / 1300));
@@ -1146,7 +1132,6 @@ hr{
     color: #858585;
 }
 .text-column__plan{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: calc(25px + 35 * (100vw / 1300));
@@ -1189,7 +1174,6 @@ hr{
 }
 .menu-el{
     color: white;
-    font-family: Roboto;
     position: relative;
     font-size: 18px;
 
@@ -1198,7 +1182,6 @@ hr{
     display: block;
     margin-top: 20px;
     color: white;
-    font-family: Roboto;
     position: relative;
     font-size: 18px;
 }
@@ -1245,7 +1228,6 @@ footer a::after{
     column-gap: 72px;
 }
 .category__courses a{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -1260,7 +1242,6 @@ footer a::after{
     color: #A55FFF;
 }
 .count-courses{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -1304,7 +1285,6 @@ footer a::after{
     position: absolute;
     top: 0;
     left: 0;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
@@ -1370,7 +1350,6 @@ footer a::after{
 }
 .h1__auth{
     text-align: center;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 50px;
@@ -1419,7 +1398,6 @@ footer a::after{
     color: white;
     display: flex;
     gap: 4px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -1566,7 +1544,6 @@ footer a::after{
     color: #A55FFF;
     text-decoration-line: underline;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -1687,7 +1664,6 @@ arrow-down
     width: 24px; height: 24px;
 }
 .input__file-button-text{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -1701,7 +1677,6 @@ arrow-down
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 27px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 30px;
@@ -1725,7 +1700,6 @@ arrow-down
     justify-content: space-between;
 }
 .h1__column-user{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: calc(20px + 20 * (100vw / 1300));
@@ -1746,7 +1720,6 @@ arrow-down
 .form-data input{
     border: none;
     outline: none;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
@@ -1792,7 +1765,6 @@ arrow-down
 .form-pass input{
     border: none;
     outline: none;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
@@ -1890,7 +1862,6 @@ arrow-down
     padding-top: 153px;
 }
 .h1__mycourses{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: calc(30px + 50 * (100vw / 1300));
@@ -1929,7 +1900,6 @@ arrow-down
     margin: 30px;
 }
 .subname-mycourses{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -1963,7 +1933,6 @@ arrow-down
     text-align: center;
     width: 257px;
     position: relative;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -1994,7 +1963,6 @@ arrow-down
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 10px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: calc(30px + 30 * (100vw / 1300));
@@ -2004,7 +1972,6 @@ arrow-down
     color: #FFFFFF;
 }
 .count__lesson{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -2021,7 +1988,6 @@ arrow-down
 }
 .count__lessons{
     width: 94px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2031,7 +1997,6 @@ arrow-down
     color: #FFFFFF;
 }
 .name__column-courses-prepod{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -2060,7 +2025,6 @@ arrow-down
 .table__courses-prepod{
     margin-top: 30px;
     width: 100%;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -2093,7 +2057,6 @@ arrow-down
     padding-left: 145px;
 }
 .status__course{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2104,7 +2067,6 @@ arrow-down
 
 }
 .status__course2{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2114,7 +2076,6 @@ arrow-down
 }
 .id__course{
     margin: auto 0;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: calc(100px + 100 * (100vw / 1300));
@@ -2125,7 +2086,6 @@ arrow-down
     margin-left: 40px;
 }
 .text__mycourses{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(10px + 10 * (100vw / 1300));
@@ -2139,7 +2099,6 @@ span{
     color: #806BFF;
 }
 .next__lesson{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(10px + 10 * (100vw / 1300));
@@ -2244,7 +2203,6 @@ span{
     margin-bottom: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: calc(40px + 40 * (100vw / 1300));
@@ -2257,7 +2215,6 @@ span{
 }
 .subname-lesson{
     background: none;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(15px + 15 * (100vw / 1300));
@@ -2325,7 +2282,6 @@ span{
     width: 100%;
     margin-top: 50px;
     font-size: calc(15px + 15 * (100vw / 1300));
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     line-height: 36px;
@@ -2334,7 +2290,6 @@ span{
 }
 .text-discord{
     width: 479px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: calc(10px + 10 * (100vw / 1300));
@@ -2398,7 +2353,6 @@ span{
     padding-top: 153px;
 }
 .h1__admin{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: calc(40px + 40 * (100vw / 1300));
@@ -2412,7 +2366,6 @@ span{
 }
 .bt__add-course{
     margin-top: 50px;
-    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -2430,7 +2383,6 @@ span{
 }
 .h3__admin{
     margin-top: 50px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: calc(25px + 25 * (100vw / 1300));
@@ -2454,7 +2406,6 @@ span{
     gap: 72px;
 }
 .cat-el{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -2474,7 +2425,6 @@ span{
 .inp-search input{
     outline: none;
     width: 100%;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2504,7 +2454,6 @@ span{
 }
 .admin .table__scroll{
     overflow-y:auto ;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2566,7 +2515,6 @@ span{
     padding-top: 153px;
 }
 .h1__add-course{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 80px;
@@ -2580,7 +2528,6 @@ span{
 }
 .name__add-img{
     margin-top: 50px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 40px;
@@ -2642,7 +2589,6 @@ span{
     background: none;
     border-radius: 3px;
     border: 1px solid #5840EA;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2664,7 +2610,6 @@ span{
     border-bottom: 1px solid #5840EA;
     background: none;
     padding-bottom: 19px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2675,7 +2620,6 @@ span{
     outline: none;
 }
 .inputs__add-course .placeholder{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2709,7 +2653,6 @@ span{
     padding-top: 153px;
 }
 .h1__add-lesson{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 80px;
@@ -2723,7 +2666,6 @@ span{
 .subname-video{
     margin-top: 50px;
     margin-bottom: 50px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 40px;
@@ -2743,7 +2685,6 @@ span{
     border-bottom: 1px solid #5840EA;
     background: none;
     padding-bottom: 19px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -2757,7 +2698,6 @@ span{
     padding-bottom: 0;
 }
 .add_lesson .placeholder{
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;

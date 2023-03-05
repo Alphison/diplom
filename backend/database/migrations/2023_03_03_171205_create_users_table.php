@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('patronymic');
-            $table->enum('role', ['Ученик', 'Преподаватель']);
-            $table->string('ava');
-            $table->string('email');
+            $table->enum('role', ['Ученик', 'Преподаватель'])->default('Ученик');
+            $table->string('ava')->default('public/images/avadefolt.png');
+            $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
         });

@@ -2,17 +2,29 @@ import './globals.css'
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import React from "react";
+import {Montserrat} from "@next/font/google"
+import { QueryClient } from 'react-query';
+import { QueryClientProvider } from 'react-query/types/react';
+
+const montserrat = Montserrat({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '700', '800'],
+})
 
 export default function RootLayout ({children}: {
   children: React.ReactNode
 }) {
+  const queryClient = new  QueryClient();
+
   return (
     <html lang="en">
       <head />
-      <body>
+      <body className={montserrat.className}>
+        <QueryClientProvider client={queryClient}>
           <Header />
-          {children}
+            {children}
           <Footer />
+        </QueryClientProvider>
       </body>
     </html>
   )
