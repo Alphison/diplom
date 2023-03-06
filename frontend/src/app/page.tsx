@@ -7,8 +7,8 @@ import { Pagination } from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useQuery } from "react-query/types/react";
-import { CourseService } from "app/services/Courses.service";
+import { useQuery } from "react-query";
+import { CourseService } from "services/Courses.service";
 
 const Page = () => {
     const {isLoading, data, error} = useQuery('courses list', () =>
@@ -84,7 +84,7 @@ const Page = () => {
                                 </div>
 
                                 <div className="img_block-course">
-                                    <Image src={course.img_course} alt="" width={635}
+                                    <Image src="/images/foto_course.jpg" alt="" width={635}
                                     height={365}/>
                                 </div>
                                 <div className="content_block-course">

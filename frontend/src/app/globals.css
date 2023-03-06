@@ -122,6 +122,7 @@ body{
 }
 .swiper-wrapper{
     display: flex;
+    height: 722px;
     align-items: center;
 }
 .swiper-slide{

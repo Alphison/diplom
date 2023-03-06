@@ -1,10 +1,12 @@
+"use client"
+
 import './globals.css'
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import React from "react";
 import {Montserrat} from "@next/font/google"
-import { QueryClient } from 'react-query';
-import { QueryClientProvider } from 'react-query/types/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 
 const montserrat = Montserrat({
   subsets: ['latin', 'cyrillic'],
