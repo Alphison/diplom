@@ -2,18 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
+import ava from "../../public/images/ava.png"
 import Model from "../../components/model/model";
-import { Pagination } from "swiper";
-import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useQuery } from "react-query";
-import { CourseService } from "services/Courses.service";
+import Slider from "components/Slider/Slider";
+import { useCourses } from "hooks/useCourses";
 
 const Page = () => {
-    const {isLoading, data, error} = useQuery('courses list', () =>
-        CourseService.getAll()
-    )
+    const {courses, isSuccess} = useCourses()
 
     return (
         <>
@@ -53,7 +50,7 @@ const Page = () => {
                 </h1>
                 <div className="button_block">
                     <a href="?home#courses" className="btn-home btn">
-                        КУРСЫ
+                        Курсы
                     </a>
                 </div>
             </div>
@@ -61,58 +58,11 @@ const Page = () => {
                 <h1 className="zag zag_our-courses">
                     Новые курсы
                 </h1>
-                <Swiper
-                    slidesPerView={2}
-                    spaceBetween={24}
-                    grabCursor={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className="mySwiper"
-                >
-                    {data?.data.map((course:any) => (
-                        <SwiperSlide>
-                            <div className="block-course">
-                                <div className="buttons__block">
-                                    <a href="?edit=<?=$course['id_course']?>" className="button__block">
-                                        <Image src="/images/edit.png" alt="" width={20} height={20}/>
-                                    </a>
-                                    <div data-id="?courses&delete=<?=$course['id_course']?>" className="button__block delete_modal_btn">
-                                        <Image src="/images/trash.png" alt="" width={20} height={20}/>
-                                    </div>
-                                </div>
-
-                                <div className="img_block-course">
-                                    <Image src="/images/foto_course.jpg" alt="" width={635}
-                                    height={365}/>
-                                </div>
-                                <div className="content_block-course">
-                                    <div className="name-course">
-                                        {course.name}
-                                    </div>
-                                    <div className="row_block-course">
-                                        <p className="time"><Image src="/images/clock-outline.png" alt="" width={20} height={20}/>5 месяцев</p>
-                                        <p className="status"><Image src="/images/ikon.png" alt="" width={20} height={20}/>Для начинающих</p>
-                                    </div>
-                                    <p className="text-course">
-                                        {course.description}
-                                    </p>
-                                    <p className="price-course">
-                                        {course.price} ₽
-                                    </p>
-                                    <a href="?cours=<?=$course['id_course']?>" className="more-course">
-                                        ПОДРОБНЕЕ
-                                    </a>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                <Slider courses={courses?.data} isSuccess={isSuccess}/>
             </div>
             <div className="about-us block" id="aboutus">
                 <h1 className="zag zag_about-us">
-                    О ШКОЛЕ
+                    О школе
                 </h1>
                 <div className="text_about-us">
                     Совместно с экспертами составляем программы и обучаем всем аспектам 3D-графики: создавать персонажей и предметы окружения, анимировать их и делать моушен-дизайн. Делаем упор на практику — на каждом курсе десятки заданий с проверкой.
@@ -120,7 +70,7 @@ const Page = () => {
             </div>
             <div className="benefits block">
                 <h1 className="zag h1__benefits">
-                    ПОЧЕМУ SCHOOLPOLI
+                    Почему SchoolPoli
                 </h1>
                 <div className="blocks__benefits">
                     <div className="block__benefits">
@@ -156,7 +106,7 @@ const Page = () => {
                 <div className="blocks__prepods">
                     <div className="block__prepods">
                         <div className="img__prepods">
-                            <Image src="" alt="" width={100} height={100}/>
+                            <Image src={ava} alt="" width={100} height={100}/>
                         </div>
                         <div className="content_prepod">
                             <h2 className="name-block__prepods">

@@ -10,11 +10,11 @@ const Header: React.FC = () => {
     return (
         <header className="header">
             <div className="header__inner">
-                <a href="?home" className="logo logo_header">
+                <Link href={'/'} className="logo logo_header">
                     <Image src="/images/logo.svg" width={40} height={44} alt={''}/>
-                </a>
+                </Link>
                 <nav className="menu menu_header">
-                    <a href="?home" className="menu-el">главная</a>
+                    <Link href="/" className="menu-el">главная</Link>
                     <a href="?courses" className="menu-el">курсы</a>
                     <a href="?home#aboutus" className="menu-el">о нас</a>
                     <a href="?home#contacts" className="menu-el">контакты</a>
