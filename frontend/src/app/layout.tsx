@@ -21,19 +21,19 @@ const queryClient = new QueryClient({
   }
 })
 
-const styling = {
-  backgroundImage: `url('${img.src}') !important`,
-  backgroundRepeat: 'no-repeat !important',
-  backgroundSize: 'cover !important',
-  width: "100%",
-  height: "100vh",
-};
-
 export default function RootLayout ({children}: {
   children: React.ReactNode
 }) {
   
   const pathname = usePathname()
+
+  const styling = {
+    backgroundImage: `url('${img.src}') !important`,
+    backgroundRepeat: 'no-repeat !important',
+    backgroundSize: 'cover !important',
+    width: "100vw",
+    height: "100vh",
+  };
   
     if(pathname === '/sign'){
       return (

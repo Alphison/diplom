@@ -1289,9 +1289,9 @@ footer a::after{
     justify-content: flex-end;
 }
 .inner-block__auth{
-    width: 641px;
+    width: 554px;
     height: 100vh;
-    padding: 50px 87px;
+    padding: 50px 44px;
     background: rgba(88, 64, 234, 0.2);
     backdrop-filter: blur(10px);
 }
@@ -1349,7 +1349,13 @@ footer a::after{
 }
 .forms__inner{
     display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: 0.2s;
 }
+.forms__inner.active{
+    transform: translateX(-486px);
+ }
 .form-wrapper{
     max-width: 100%;
     min-width: 100%;
@@ -1383,34 +1389,34 @@ footer a::after{
     background: rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
-    padding: 18px 27px;
+    padding: 12px 27px;
     border-radius: 16px;
     color: white;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
 }
 .placeholder{
     position: absolute;
-    top: 18px;
+    top: 12px;
     left: 27px;
     color: white;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     transition: 0.3s;
 }
 .inp-box input:focus + .placeholder,
 .inp-box input:not(:placeholder-shown) + .placeholder{
-    transform: translateY(-38px);
-    font-size: 15px;
+    transform: translateY(-31px);
+    font-size: 13px;
     background: white;
     color: #5840EA;
     border-radius: 16px;
-    padding: 5px 10px;
+    padding: 3px 10px;
 }
 .inputs-form{
     display: flex;
@@ -1423,8 +1429,8 @@ footer a::after{
     border: none;
     border-radius: 16px;
     text-align: center;
-    padding: 18px 0;
-    font-size: 20px;
+    padding: 12px 0;
+    font-size: 18px;
     font-weight: 500;
     color: #5840EA;
     transition: 0.3s;
@@ -1446,7 +1452,7 @@ footer a::after{
 .or p{
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
 
     color: #FFFFFF;
@@ -1462,10 +1468,10 @@ footer a::after{
     gap: 13px;
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     color: #555555;
-    padding: 18px 0;
+    padding: 12px 0;
 }
 
 /* user */

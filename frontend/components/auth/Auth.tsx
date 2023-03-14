@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import google from "../../public/images/google.jpg";
 import "../../src/app/globals.css";
