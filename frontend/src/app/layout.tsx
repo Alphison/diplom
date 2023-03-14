@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import {Montserrat} from "@next/font/google"
 import LayoutHeaderFooter from './LayoutHeaderFooter';
 import { usePathname } from 'next/navigation';
+import img from "../../public/images/fon_auth.jpg"
 
 const montserrat = Montserrat({
   subsets: ['latin', 'cyrillic'],
@@ -20,18 +21,25 @@ const queryClient = new QueryClient({
   }
 })
 
+const styling = {
+  backgroundImage: `url('${img.src}') !important`,
+  backgroundRepeat: 'no-repeat !important',
+  backgroundSize: 'cover !important',
+  width: "100%",
+  height: "100vh",
+};
+
 export default function RootLayout ({children}: {
   children: React.ReactNode
 }) {
   
   const pathname = usePathname()
-
   
-    if(pathname === '/auth'){
+    if(pathname === '/sign'){
       return (
         <html lang="en">
             <head />
-            <body className={montserrat.className}>
+            <body className={montserrat.className} style={styling}>
             <QueryClientProvider client={queryClient}>
                 {children}
             </QueryClientProvider>

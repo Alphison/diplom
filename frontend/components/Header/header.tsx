@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                             </a>
                         </div>
                     </div>
-                    <Link className="btn-auth__header" href={'/auth'}>
+                    <Link className="btn-auth__header" href={'/sign'}>
                         войти
                     </Link>
                     <div className="burger">
