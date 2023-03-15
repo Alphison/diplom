@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('data');
             $table->bigInteger('count_lesson')->unsigned();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('profession');
             $table->string('img_course');
             $table->string('goal');

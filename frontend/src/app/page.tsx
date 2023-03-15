@@ -9,8 +9,9 @@ import "swiper/css/pagination";
 import Slider from "components/Slider/Slider";
 import { useCourses } from "hooks/useCourses";
 
+
 const Page = () => {
-    const {courses, isSuccess} = useCourses()
+    const {courses, isSuccess, isLoading} = useCourses()
 
     return (
         <>
@@ -58,7 +59,7 @@ const Page = () => {
                 <h1 className="zag zag_our-courses">
                     Новые курсы
                 </h1>
-                <Slider courses={courses?.data} isSuccess={isSuccess}/>
+                <Slider courses={courses?.data.data} isSuccess={isSuccess} isLoading={isLoading}/>
             </div>
             <div className="about-us block" id="aboutus">
                 <h1 className="zag zag_about-us">

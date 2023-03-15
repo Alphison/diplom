@@ -3,21 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CourseResources;
-use App\Models\Course;
+use App\Http\Resources\CategoryResources;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CourseController extends Controller
+class CategoryController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-       return CourseResources::collection(Course::all());
-        
+        return CategoryResources::collection(Category::with('courses')->get());
     }
 
     /**
@@ -39,7 +38,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        return new CourseResources(Course::findOrFail($id));
+        return new CategoryResources(Category::with('courses')->findOrFail());
     }
 
     /**

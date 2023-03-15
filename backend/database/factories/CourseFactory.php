@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Auth\User;
 
@@ -17,17 +19,17 @@ class CourseFactory extends Factory
      */
     public function definition()
     {
-        $userIds = \App\Models\User::all()->pluck('id')->toArray();
         return [
             'name'=>$this->faker->name(),
             'description'=>$this->faker->text(),
             'data'=>$this->faker->name(),
             'count_lesson'=>$this->faker->randomDigit(),
-            'user_id' => $this->faker->randomElement($userIds),
+            'user_id' => $this->faker->randomDigit(),
+            'category_id' => $this->faker->numberBetween(1, 3),
             'profession'=>$this->faker->name(),
             'img_course'=>$this->faker->imageUrl(640, 480, 'animals', true),
             'goal'=>$this->faker->name(),
-            'price'=>$this->faker->randomElement($userIds)
+            'price'=>$this->faker->randomNumber()
         ];
     }
 }

@@ -113,6 +113,11 @@ body{
     opacity: 1;
     visibility: visible;
 }
+.wrapper-loader{
+    width: 40px;
+    height: 40px;
+    margin:  0 auto;
+}
 /* slider */
 .mySwiper {
     width: 1300px !important;
@@ -153,7 +158,7 @@ body{
     width: 635px;
 }
 /*preloader*/
-.preloader{
+/* .preloader{
     width: 100%;
     height: 100%;
     display: flex;
@@ -211,6 +216,63 @@ body{
     left: 40px;
     -webkit-animation: dot-jump 0.5s 0.4s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
     animation: dot-jump 0.5s 0.4s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+} */
+
+
+
+.pl {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.pl__ring, .pl__ball {
+	animation: ring 2s ease-out infinite;
+}
+.pl__ball {
+	animation-name: ball;
+}
+
+/* Dark theme  */
+@media (prefers-color-scheme: dark) {
+	.pl {
+		--bg: hsl(var(--hue),10%,10%);
+		--fg: hsl(var(--hue),10%,90%);
+	}
+}
+
+/* Animation */
+@keyframes ring {
+	from {
+		stroke-dasharray: 0 257 0 0 1 0 0 258;
+	}
+	25% {
+		stroke-dasharray: 0 0 0 0 257 0 258 0;
+	}
+	50%, to {
+		stroke-dasharray: 0 0 0 0 0 515 0 0;
+	}
+}
+@keyframes ball {
+	from, 50% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: 1;
+	}
+	64% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -109;
+	}
+	78% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -145;
+	}
+	92% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -157;
+	}
+	57%, 71%, 85%, 99%, to {
+		animation-timing-function: ease-out;
+		stroke-dashoffset: -163;
+	}
 }
 
 @keyframes dot-jump {
@@ -1280,7 +1342,21 @@ footer a::after{
 
     color: #FFFFFF;
 }
+.courses__block{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 50px;
+    gap: 30px;
+}
 /* sign */
+.wrapper-auth{
+    background-image: url('../../public/images/fon_auth.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 100vw;
+    max-height: 100vh;
+}
 .auth{
     max-width: 1300px;
     height: 100vh;
@@ -2302,17 +2378,26 @@ span{
     gap: 72px;
 }
 .cat-el{
+    background: none;
+    border: none;
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 23px;
     font-feature-settings: 'pnum' on, 'lnum' on;
 
     color: #FFFFFF;
     transition: 0.3s;
+    padding: 4px 16px;
+    border-radius: 16px;
+}
+cat-el.active{
+    background: white;
+    color: #5840EA;
 }
 .cat-el:hover{
-    color: #806BFF;
+    background: white;
+    color: #5840EA;
 }
 .inp-search{
     display: flex;

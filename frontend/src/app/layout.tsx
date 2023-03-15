@@ -26,20 +26,12 @@ export default function RootLayout ({children}: {
 }) {
   
   const pathname = usePathname()
-
-  const styling = {
-    backgroundImage: `url('${img.src}') !important`,
-    backgroundRepeat: 'no-repeat !important',
-    backgroundSize: 'cover !important',
-    width: "100vw",
-    height: "100vh",
-  };
   
     if(pathname === '/sign'){
       return (
         <html lang="en">
             <head />
-            <body className={montserrat.className} style={styling}>
+            <body className={montserrat.className}>
             <QueryClientProvider client={queryClient}>
                 {children}
             </QueryClientProvider>

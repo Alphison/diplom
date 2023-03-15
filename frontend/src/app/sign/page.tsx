@@ -19,7 +19,7 @@ const Sign = () => {
   }
 
   return (
-    <>
+    <div className="wrapper-auth">
       <div className="auth">
         <div className="inner-block__auth">
           <div className="header_auth">
@@ -47,7 +47,7 @@ const Sign = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

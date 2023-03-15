@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import {useRouter} from "next/navigation";
 import Link from "next/link";
 
 const Header: React.FC = () => {
@@ -15,7 +14,7 @@ const Header: React.FC = () => {
                 </Link>
                 <nav className="menu menu_header">
                     <Link href="/" className="menu-el">главная</Link>
-                    <a href="?courses" className="menu-el">курсы</a>
+                    <Link href="/courses" className="menu-el">курсы</Link>
                     <a href="?home#aboutus" className="menu-el">о нас</a>
                     <a href="?home#contacts" className="menu-el">контакты</a>
                 </nav>
