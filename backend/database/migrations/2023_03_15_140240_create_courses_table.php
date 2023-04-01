@@ -17,14 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('data');
-            $table->bigInteger('count_lesson')->unsigned();
+            $table->string('duration');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');
             $table->string('profession');
             $table->string('img_course');
             $table->string('goal');
             $table->bigInteger('price')->unsigned();
+            $table->string('model');
             $table->timestamps();
         });
     }

@@ -1,24 +1,15 @@
 "use client"
 
 import './globals.css'
-import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query';
+import React, { useContext } from 'react'
 import {Montserrat} from "@next/font/google"
 import LayoutHeaderFooter from './LayoutHeaderFooter';
 import { usePathname } from 'next/navigation';
-import img from "../../public/images/fon_auth.jpg"
+import { MyContext } from 'components/Header/MyProvider';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'cyrillic'],
   weight: ['400', '500', '700', '800'],
-})
-
-const queryClient = new QueryClient({
-  defaultOptions:{
-    queries:{
-      refetchOnWindowFocus: false
-    }
-  }
 })
 
 export default function RootLayout ({children}: {
@@ -32,9 +23,7 @@ export default function RootLayout ({children}: {
         <html lang="en">
             <head />
             <body className={montserrat.className}>
-            <QueryClientProvider client={queryClient}>
                 {children}
-            </QueryClientProvider>
             </body>
         </html>
       )
@@ -43,12 +32,10 @@ export default function RootLayout ({children}: {
   return (
     <html lang="en">
         <head />
-        <body className={montserrat.className}>
-        <QueryClientProvider client={queryClient}>
+        <body className={montserrat.className} id="outer-container">
           <LayoutHeaderFooter>
             {children}
           </LayoutHeaderFooter>
-        </QueryClientProvider>
         </body>
     </html>
   )

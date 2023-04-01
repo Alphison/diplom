@@ -1,8 +1,8 @@
 "use client"
 
-import {ThreeElements, useLoader} from "@react-three/fiber"
+import {ThreeElements, useFrame, useLoader, useThree} from "@react-three/fiber"
 import { FlakesTexture } from 'three/examples/jsm/textures/FlakesTexture.js';
-import {useRef} from "react"
+import {FC, useEffect, useRef} from "react"
 import * as THREE from 'three'
 import {useEnvironment, useTexture} from "@react-three/drei";
 
@@ -17,7 +17,7 @@ const Box = (props: ThreeElements['mesh']) => {
 
     return (
         <mesh {...props} ref={ref} >
-            <sphereGeometry args={[100, 100, 100]}/>
+            <sphereGeometry args={[170, 170, 170]}/>
             <meshPhysicalMaterial
                 map={texture}
                 color={0x8418ca}

@@ -2,115 +2,181 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, {useState} from "react";
-import { useCourses } from "hooks/useCourses";
-import Loader from '../../../public/loader/Loader'
-import { useCategory } from "hooks/useCategories";
-
+import React, { useState, useEffect } from "react";
+import Loader from "../../../public/loader/Loader";
+import { useCategory, useCourses } from "store/useCourses";
+import { motion } from "framer-motion";
 
 const page = () => {
   const router = useRouter();
-  // const [categoryCourses, setCategories] = useState() 
 
-  const { courses, isSuccess, isLoading } = useCourses()
-  const { categories, isSuccess:Success, isLoading:Loading} = useCategory()
+  const { loading, error, fetchCourses } = useCourses((state) => ({
+    loading: state.loading,
+    error: state.error,
+    fetchCourses: state.fetchCourses,
+  }));
 
-  const countCourse = courses?.data.data?.length
+  const {
+    categories,
+    loading: Loading,
+    error: Error,
+    fetchCategory,
+  } = useCategory((state) => ({
+    loading: state.loading,
+    categories: state.categories,
+    error: state.error,
+    fetchCategory: state.fetchCategory,
+  }));
 
-  // const handleCategoryClick = (id:number) => {
-  //   setCategories(courses?.data.data?.filter(item => item.category_id === id))
-  // }
+  const [catId, setCatId] = useState(0);
+
+  const courses = useCourses((state) => {
+    switch (catId) {
+      case 1:
+        return state.courses.filter((item) => item.category_id === 1);
+      case 2:
+        return state.courses.filter((item) => item.category_id === 2);
+      case 3:
+        return state.courses.filter((item) => item.category_id === 3);
+      default:
+        return state.courses;
+    }
+  });
+
+  useEffect(() => {
+    fetchCourses();
+    fetchCategory();
+  }, []);
+
+  const countCourse = courses.length;
+
+  const handleCategoryClick = (id: number) => {
+    setCatId(id);
+  };
+  const handleAllCoursesClick = (id: number) => {
+    setCatId(id);
+  };
+
+  const variantsCourses = {
+    hidden: {
+      opacity: 0,
+      transform: "scale(0)",
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      transform: "scale(1)",
+      transition: {
+        delay: i * 0.3,
+      },
+    }),
+  };
+
+  const variantsCategory = {
+    hidden: {
+      opacity: 0,
+      y: -50,
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.3,
+      },
+    }),
+  };
 
   return (
-    <div className="courses">
+    <div className="courses" id="page-wrap">
       <h1 className="zag h1__courses">Наши курсы</h1>
       <div className="row__courses">
         <div className="category category__courses">
-          <button className="cat-el">
+          <button
+            className={catId === 0 ? "cat-el active" : "cat-el"}
+            onClick={() => handleAllCoursesClick(0)}
+          >
             Все курсы
           </button>
-          {
-            categories?.data.data?.map((cat) => {
-              return(
-                <button className="cat-el" onClick={() => handleCategoryClick(cat.id)}>
+          {Loading ? (
+            <div className="wrapper-loader">
+              <Loader />
+            </div>
+          ) : (
+            categories.map((cat, i) => {
+              return (
+                <motion.button
+                  key={cat.id}
+                  variants={variantsCategory}
+                  initial="hidden"
+                  animate="visible"
+                  custom={i}
+                  className={catId === cat.id ? "cat-el active" : "cat-el"}
+                  onClick={() => handleCategoryClick(cat.id)}
+                >
                   {cat.name}
-                </button>
-              )
+                </motion.button>
+              );
             })
-          }
+          )}
         </div>
-        <p className="count-courses">Всего курсов: {countCourse}</p>
+        <motion.p
+          initial={{ x: 100 }}
+          animate={{ x: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+          }}
+          className="count-courses"
+        >
+          Всего курсов: {countCourse}
+        </motion.p>
       </div>
       <div className="courses__block">
-      {
-      isLoading ? <div className="wrapper-loader"><Loader /></div> :
-      
-      isSuccess &&
-      courses?.data.data?.map((course) => {
-          return (
-            <div className="block-course">
-              <div className="buttons__block">
-                <a
-                  href="?edit=<?=$course['id_course']?>"
-                  className="button__block"
-                >
-                  <Image src="/images/edit.png" alt="" width={20} height={20} />
-                </a>
-                <div
-                  data-id="?courses&delete=<?=$course['id_course']?>"
-                  className="button__block delete_modal_btn"
-                >
+        {loading ? (
+          <div className="wrapper-loader">
+            <Loader />
+          </div>
+        ) : (
+          courses?.map((course, i) => {
+            return (
+              <motion.div
+                animate="visible"
+                variants={variantsCourses}
+                initial={"hidden"}
+                custom={i}
+                className="block-course"
+                key={course.id}
+              >
+                <div className="img_block-course">
                   <Image
-                    src="/images/trash.png"
+                    src="/images/foto_course.jpg"
                     alt=""
-                    width={20}
-                    height={20}
+                    width={635}
+                    height={365}
                   />
                 </div>
-              </div>
-
-              <div className="img_block-course">
-                <Image
-                  src="/images/foto_course.jpg"
-                  alt=""
-                  width={635}
-                  height={365}
-                />
-              </div>
-              <div className="content_block-course">
-                <div className="name-course">{course.name}</div>
-                <div className="row_block-course">
-                  <p className="time">
-                    <Image
-                      src="/images/clock-outline.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                    />
-                    5 месяцев
-                  </p>
-                  <p className="status">
-                    <Image
-                      src="/images/ikon.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                    />
-                    Для начинающих
-                  </p>
+                <div className="content_block-course">
+                  <div className="name-course">{course.name}</div>
+                  <p className="text-course">{course.description}</p>
+                  <div className="row-course-block">
+                    <p className="category-name">Для начинающих</p>
+                    <button
+                      onClick={() => router.push(`/course/${course.id}`)}
+                      className="more-course"
+                    >
+                      <Image
+                        src="/images/arrowCourse.png"
+                        width={8}
+                        height={13}
+                        alt="arrow"
+                      />
+                    </button>
+                  </div>
                 </div>
-                <p className="text-course">{course.description}</p>
-                <p className="price-course">{course.price} ₽</p>
-                <button
-                  onClick={() => router.push(`/course/${course.id}`)}
-                  className="more-course"
-                >
-                  ПОДРОБНЕЕ
-                </button>
-              </div>
-            </div>
-          );
-        })}
+              </motion.div>
+            );
+          })
+        )}
       </div>
     </div>
   );

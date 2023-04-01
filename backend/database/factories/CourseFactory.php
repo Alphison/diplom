@@ -24,7 +24,7 @@ class CourseFactory extends Factory
             'description'=>$this->faker->text(),
             'data'=>$this->faker->name(),
             'count_lesson'=>$this->faker->randomDigit(),
-            'user_id' => $this->faker->randomDigit(),
+            'user_id' => $this->faker->numberBetween(1, 3),
             'category_id' => $this->faker->numberBetween(1, 3),
             'profession'=>$this->faker->name(),
             'img_course'=>$this->faker->imageUrl(640, 480, 'animals', true),

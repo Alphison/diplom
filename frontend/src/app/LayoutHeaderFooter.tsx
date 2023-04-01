@@ -1,16 +1,18 @@
+import Navbar from 'components/Header/Navbar';
 import React from 'react'
 import Header from "../../components/Header/header";
-import Footer from "../../components/Footer/footer";
+import MyProvider from '../../components/Header/MyProvider';
 
 
 export default function LayoutHeaderFooter ({children}: {
   children: React.ReactNode
 }) {
 
-  return (<div>
+  return (
+    <MyProvider>
         <Header />
+        <Navbar/>
           {children}
-        <Footer />
-    </div>
+    </MyProvider>
   )
 }

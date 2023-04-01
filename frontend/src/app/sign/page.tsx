@@ -6,16 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-export interface Active {
-  active: string
-}
-
 const Sign = () => {
   const buttons = ["Авторизация", "Регистрация"];
-  const [active, setActive] = useState<Active>({active: 'Авторизация'})
+  const [active, setActive] = useState<string>('Авторизация')
 
   const handleSetActive = (name:string) => {
-    setActive({active: name})
+    setActive(name)
   }
 
   return (
@@ -30,7 +26,7 @@ const Sign = () => {
               {buttons.map((name) => {
                 return (
                   <button
-                    className={active.active === name ? 'btn-header__auth active' : 'btn-header__auth'}
+                    className={active === name ? 'btn-header__auth active' : 'btn-header__auth'}
                     onClick={() => handleSetActive(name)}
                   >
                     {name}
@@ -40,9 +36,9 @@ const Sign = () => {
             </div>
           </div>
           <div className="forms">
-            <div className={active.active === 'Регистрация' ? "forms__inner active" : "forms__inner"}>
+            <div className={active === 'Регистрация' ? "forms__inner active" : "forms__inner"}>
               <Auth />
-              <Register />
+              <Register setActive={setActive}/>
             </div>
           </div>
         </div>
