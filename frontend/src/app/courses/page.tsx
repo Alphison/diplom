@@ -10,10 +10,11 @@ import { motion } from "framer-motion";
 const page = () => {
   const router = useRouter();
 
-  const { loading, error, fetchCourses } = useCourses((state) => ({
+  const { loading, error, fetchCourses, courses } = useCourses((state) => ({
     loading: state.loading,
     error: state.error,
     fetchCourses: state.fetchCourses,
+    courses: state.courses
   }));
 
   const {
@@ -30,25 +31,14 @@ const page = () => {
 
   const [catId, setCatId] = useState(0);
 
-  const courses = useCourses((state) => {
-    switch (catId) {
-      case 1:
-        return state.courses.filter((item) => item.category_id === 1);
-      case 2:
-        return state.courses.filter((item) => item.category_id === 2);
-      case 3:
-        return state.courses.filter((item) => item.category_id === 3);
-      default:
-        return state.courses;
-    }
-  });
+  const usersData = catId === 0 ? courses : courses?.filter(item => item.category_id === catId)
 
   useEffect(() => {
     fetchCourses();
     fetchCategory();
   }, []);
 
-  const countCourse = courses.length;
+  const countCourse = courses?.length;
 
   const handleCategoryClick = (id: number) => {
     setCatId(id);
@@ -137,7 +127,9 @@ const page = () => {
             <Loader />
           </div>
         ) : (
-          courses?.map((course, i) => {
+          usersData?.map((course, i) => {
+            const src = `${process.env.NEXT_PUBLIC_API}storage/${course?.img_course}` 
+            const cat = categories?.find(category => category.id === course.category_id)
             return (
               <motion.div
                 animate="visible"
@@ -149,7 +141,8 @@ const page = () => {
               >
                 <div className="img_block-course">
                   <Image
-                    src="/images/foto_course.jpg"
+                    loader={() => src}
+                    src={src}
                     alt=""
                     width={635}
                     height={365}
@@ -159,7 +152,7 @@ const page = () => {
                   <div className="name-course">{course.name}</div>
                   <p className="text-course">{course.description}</p>
                   <div className="row-course-block">
-                    <p className="category-name">Для начинающих</p>
+                    <p className="category-name">{cat?.name}</p>
                     <button
                       onClick={() => router.push(`/course/${course.id}`)}
                       className="more-course"

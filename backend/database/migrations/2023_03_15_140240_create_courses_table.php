@@ -19,12 +19,11 @@ return new class extends Migration
             $table->text('description');
             $table->string('duration');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('profession');
             $table->string('img_course');
             $table->string('goal');
             $table->bigInteger('price')->unsigned();
-            $table->string('model');
             $table->timestamps();
         });
     }

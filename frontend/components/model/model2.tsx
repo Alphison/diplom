@@ -1,9 +1,13 @@
 import { useLoader } from '@react-three/fiber'
+import { FC } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { modelType } from './model'
 
-function Scene() {
-    const gltf = useLoader(GLTFLoader, `star.glb`)
-    return <primitive object={gltf.scene} scale={35}/>
+const Scene:FC<modelType> = ({model, scale, position}) => {
+    const gltf = useLoader(GLTFLoader, model)
+    return (
+    <primitive object={gltf.scene} scale={scale} position={position}/>
+    )
 }
 
 export default Scene

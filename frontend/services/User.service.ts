@@ -16,7 +16,7 @@ export interface BodyUser {
 }
 
 export const User = {
-    async user(token:BodyUser){
+    async user(token:string | null){
         const response = await fetch(`${axios.defaults.baseURL}api/auth/me`, {
             method: 'POST',
             headers: {
@@ -40,6 +40,17 @@ export const User = {
     },
     async updateProfile({access_token, data}:BodyUser){
         const response = await fetch(`${axios.defaults.baseURL}api/profile/updateProfile`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`,
+            },
+            body: data,
+        } )
+        return await response.json()
+    },
+    async updateRole({access_token, data}:BodyUser){
+        const response = await fetch(`${axios.defaults.baseURL}api/profile/updateRole`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'duration',
+        'category_id',
+        'user_id',
+        'profession',
+        'goal',
+        'img_course'
+    ];
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }

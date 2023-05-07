@@ -1,14 +1,16 @@
-// "use client"
+"use client"
 
 import React, { FC, useEffect, useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
 import '../../src/app/globals.css'
 import { motion } from "framer-motion";
 import { animStat } from "animation/animation";
-import { UsersType, useUsers } from "store/useUser";
+import { UsersType } from "store/useUser";
 import Loader from "public/loader/Loader";
+import { TiUserDelete } from "react-icons/ti" 
+import Swal from "sweetalert2";
 
-const Users:FC<UsersType> = ({users, loading, fetchUsers}) => {
+const Users:FC<UsersType> = ({users, loading, fetchUsers, fetchUserDelete, error, deleteUser, fetchUserUpdate, updateUser}) => {
   const [cat, setCat] = useState<string>('')
   const [search, setSearch] = useState<string>('')
 
@@ -20,10 +22,48 @@ const Users:FC<UsersType> = ({users, loading, fetchUsers}) => {
     fetchUsers()
   }, [])
 
+
+  const modalFunc = async (id:number) => {
+    return Swal.fire({
+      title: 'Вы хотите удалить пользователя?',
+      text: "Вы не сможете отменить это!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#5840EA',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Да, удалить!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetchUserDelete(id)
+        if(error === null){
+          Swal.fire(
+            'Удалён!',
+            'Пользователь успешно удалён',
+            'success'
+          )
+            deleteUser(id)
+        }
+      }
+    })
+  }
+
+  const modalFunc2 = async (id:number, role:string) => {
+    fetchUserUpdate(id, role)
+    if(error === null){
+      updateUser(id, role)
+      return Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Роль успешно изменена!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  }
+
   if(loading){
     return <Loader />
   }
-
 
   return (
     <motion.div variants={animStat} initial={'hidden'} animate={'visible'}>
@@ -63,7 +103,15 @@ const Users:FC<UsersType> = ({users, loading, fetchUsers}) => {
                       <td>{item.surname} {item.name} {item.patronymic}</td>
                       <td>{item.email}</td>
                       <td>{item.role}</td>
-                      <td><button className="btn-up-user">Повысить до преподавателя</button></td>
+                      <td>
+                        {
+                          item.role === 'Пользователь' && <button className="btn-up-user" onClick={() => modalFunc2(item.id, 'Преподаватель')}>Повысить до преподавателя</button>
+                        }
+                        {
+                          item.role === 'Преподаватель' && <button className="btn-down-user" onClick={() => modalFunc2(item.id, 'Пользователь')}>Понизить до пользователя</button>
+                        }
+                        <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><TiUserDelete /></button>
+                      </td>
                   </tr>
                 )
               })

@@ -4,6 +4,7 @@ import {motion} from 'framer-motion'
 import * as Yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
+import { animErrors } from 'animation/animation';
 
 interface Props {
     setProfile: (profile: boolean) => void;
@@ -86,18 +87,6 @@ const EditProfile:FC<Props> = ({setProfile, user}) => {
         mode: 'onBlur',
         resolver: yupResolver(formSchema)
       });
-
-    const animErrors = {
-        hidden: { opacity: 0, x: 20 },
-        show: {
-            opacity: 1,
-            x: 0,
-            transition: {
-            duration: 0.5,
-            ease: 'easeInOut'
-            }
-        }
-    }
 
   return (
     <form onSubmit={(e) => submit(e)} className='infoprofile'>

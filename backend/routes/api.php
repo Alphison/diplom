@@ -3,9 +3,13 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\LessonController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UpdateAvatarController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CourseUser;
+use App\Http\Controllers\Api\LessonUserController;
+use App\Models\LessonUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +32,9 @@ Route::apiResources([
     'courses' => CourseController::class,
     'category' => CategoryController::class,
     'users' => UserController::class,
+    'lessons' => LessonController::class,
+    'course_user' => CourseUser::class,
+    'lesson_user' => LessonUserController::class,
 ]);
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
@@ -40,4 +47,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 Route::group(['middleware' => 'api', 'prefix' => 'profile'], function ($router) {
     Route::post('/updateAvatar', [UpdateAvatarController::class, 'updateAvatar']);
     Route::post('/updateProfile', [ProfileController::class, 'updateProfile']);
+    Route::post('/updateRole', [ProfileController::class, 'updateRole']);
 });

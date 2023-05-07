@@ -65,6 +65,12 @@ const Navbar = () => {
         {
           access_token | user?.role === 'Админ' && <Link href="/admin" className="menu-item"><MdAdminPanelSettings />Админ панель</Link>
         }
+        {
+          access_token | user?.role === 'Преподаватель' && <Link href="/mycourses" className="menu-item"><IoIosSchool />Мои курсы</Link>
+        }
+        {
+          access_token | user?.role === 'Ученик' && <Link href="/mycourses_student" className="menu-item"><IoIosSchool />Мои курсы</Link>
+        }
         <Link href="/" className="menu-item"><AiFillHome />Главная</Link>
         <Link href="/courses" className="menu-item"><IoIosSchool />Курсы</Link>
         <Link href="#" className="menu-item"><AiFillInfoCircle />О школе</Link>

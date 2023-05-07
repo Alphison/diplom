@@ -13,6 +13,10 @@ import { Counter } from "../../../hooks/useAnimCount"
 import AddCours from "components/admin/AddCours";
 import { animH1, animStat, animStat2, animStat3 } from "animation/animation";
 import { UsersType, useUsers } from "store/useUser";
+import Swal from "sweetalert2";
+import Courses from "components/admin/Courses";
+import EditCourse from "components/admin/EditCourse";
+import { CourseDataType } from "store/useCourse";
 
 const buttons = [
   {
@@ -37,10 +41,17 @@ const buttons = [
   }
 ]
 
+
+
 const Admin = () => {
   const [activeRazdel, setActiveRazdel] = useState('Пользователи');
-  const { loading, fetchUsers, users} = useUsers<UsersType>(state => ({users: state.users, loading: state.loading, fetchUsers: state.fetchUsers}))
+  const [course, setCourse] = useState<CourseDataType>()
+  const { loading, fetchUsers, users, fetchUserDelete, error, deleteUser, fetchUserUpdate, updateUser} = useUsers<UsersType>(state =>
+     ({users: state.users, loading: state.loading, fetchUsers: state.fetchUsers, fetchUserDelete: state.fetchUserDelete,
+       error: state.error, deleteUser: state.deleteUser, fetchUserUpdate: state.fetchUserUpdate, updateUser: state.updateUser}))
   const val = users?.length
+ 
+  
 
   return (
     <>
@@ -95,8 +106,10 @@ const Admin = () => {
           </div>
           <h2 className="name-razdel">{activeRazdel}</h2>
           {
-            activeRazdel === 'Пользователи' ? <Users users={users} loading={loading} fetchUsers={fetchUsers}/> :
-            activeRazdel === 'Добавить курс' ? <AddCours /> : null
+            activeRazdel === 'Пользователи' ? <Users users={users} loading={loading} fetchUsers={fetchUsers} fetchUserDelete={fetchUserDelete} error={error} deleteUser={deleteUser} fetchUserUpdate={fetchUserUpdate} updateUser={updateUser}/> :
+            activeRazdel === 'Добавить курс' ? <AddCours /> :
+            activeRazdel === 'Курсы' ? <Courses setActiveRazdel={setActiveRazdel} setCourse={setCourse}/> :
+            activeRazdel === 'Редактирование' ? <EditCourse course={course!}/> : null
           }
         </div>
     </div>

@@ -39,4 +39,14 @@ class ProfileController extends Controller
             ], 200);
         }
     }
+    public function updateRole(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        $user->role = $request->role;
+        $user->update();
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user
+        ], 200);
+    }
 }

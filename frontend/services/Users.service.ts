@@ -12,4 +12,18 @@ export const UsersService = {
             }
         })
     },
+    async delete(id:number){
+        return axios.post(`api/users/${id}`, {
+            _method: 'DELETE',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+    },
+    async update(id:number, role:string){
+        return axios.post(`api/users/${id}`, {
+            _method: 'PUT',
+            role: role
+        })
+    },
 }

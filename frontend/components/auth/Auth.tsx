@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../src/app/globals.css";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import * as Yup from "yup";
@@ -21,28 +21,38 @@ type Inputs = {
 
 const Auth = () => {
   const router = useRouter();
-  const { loading, error, fetchLogin, message} = uselogin(state => ({
+  const { loading, error, fetchLogin, status, setStatus} = uselogin(state => ({
     loading: state.loading,
     error: state.error,
-    message: state.message,
-    fetchLogin: state.fetchLogin
+    fetchLogin: state.fetchLogin,
+    status: state.status,
+    setStatus: state.setStatus
 }))
+
+console.log(status)
 
 const handleSubmitLogin: SubmitHandler<Inputs> = ({password, email}) => {
   fetchLogin({password, email});
-  if(message === 'success'){
+}
+
+const message = () => {
+  if(status == 200) {
     reset()
     router.push('/')
+    return Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Вы успешно авторизовались!',
+      showConfirmButton: false,
+      timer: 2000
+    })
   }
-  message === 'success' ? Swal.fire({
-    position: 'top-end',
-    icon: 'success',
-    title: 'Вы успешно авторизовались!',
-    showConfirmButton: false,
-    timer: 2000
-  })
-  : null
 }
+
+useEffect(() => {
+  message()
+  setStatus()
+}, [status])
 
   const [activeEyePassword, setActiveEyePassword] = useState(true)
 

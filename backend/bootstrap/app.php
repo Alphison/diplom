@@ -41,6 +41,7 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+ini_set('post_max_size', '1G');
 /*
 |--------------------------------------------------------------------------
 | Return The Application

@@ -9,7 +9,9 @@ type Register = {
     loading: boolean,
     error: string | null,
     message: string | null,
-    fetchRegister: (body:BodyRegister) => void
+    fetchRegister: (body:BodyRegister) => void,
+    status: number | null,
+    setStatus: () => void,
 }
 
 export const useRegister = create<Register>()(immer(set => ({
@@ -17,6 +19,7 @@ export const useRegister = create<Register>()(immer(set => ({
     loading: false,
     error: null,
     message: null,
+    status: null,
     fetchRegister: async (body) => {
         set({ loading: true });
 
@@ -25,16 +28,18 @@ export const useRegister = create<Register>()(immer(set => ({
 
             set({
                 user: res.data.user,
-                message: res.data.message
+                message: res.data.message,
+                status: res.status
             })
 
         } catch(error: any) {
-            // set({error: error.response.data.errors.email})
+            set({error: error.response.data.errors.email})
 
         } finally {
             set({loading: false})
         }
-    }
+    },
+    setStatus: () => set({status: null})
 })))
 
 export type User = {
@@ -56,10 +61,13 @@ type login = {
     error: null | any,
     message: string | null,
     fetchLogin: (body:BodyLogin) => void,
-    fetchUser: (token:BodyUser) => void,
+    fetchUser: (token:string | null) => void,
     getToken: () => void,
     fetchUpdateAvatar: ({access_token, data}:BodyUser) => void,
     fetchUpdateProfile: ({access_token, data}:BodyUser) => void,
+    fetchUpdateRole: ({access_token, data}:BodyUser) => void,
+    status: number | null,
+    setStatus: () => void,
 }
 
 export const uselogin = create<login>()(immer(set => ({
@@ -69,11 +77,13 @@ export const uselogin = create<login>()(immer(set => ({
     loading: false,
     error: null,
     message: null,
+    status: null,
     fetchLogin: async (body) => {
         set({ loading: true });
 
         try {
             const res = await Sign.login(body)
+            set({status: res.status})
 
             set({
                 user: res.data.user,
@@ -83,10 +93,10 @@ export const uselogin = create<login>()(immer(set => ({
             })
 
             sessionStorage.setItem('access_token', JSON.stringify(res.data.access_token))
+
             
         } catch(error: any) {
-            // set({error: error.response.data.errors})
-
+            set({error: error.response.data.errors})
         } finally {
             set({loading: false})
         }
@@ -155,5 +165,22 @@ export const uselogin = create<login>()(immer(set => ({
             set({loading: false})
         }
     },
-    getToken: () => set({access_token: JSON.parse(sessionStorage.getItem('access_token')!)})
+    fetchUpdateRole: async ({access_token, data}) => {
+        set({loading: true})
+        try {
+            const res = await User.updateRole({access_token, data})
+
+            set({user: res.user})
+
+            set({error: res.errors})
+            
+        } catch(error: any) {
+            // set({error: error})
+
+        } finally {
+            set({loading: false})
+        }
+    },
+    getToken: () => set({access_token: JSON.parse(sessionStorage.getItem('access_token')!)}),
+    setStatus: () => set({status: null})
 })))

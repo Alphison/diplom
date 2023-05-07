@@ -34,8 +34,13 @@ import Scene from "./model2";
 //         />
 //     );
 // }
+export interface modelType {
+    model: string,
+    scale: number,
+    position: [number, number, number]
+}
 
-const Model = () => {
+const Model:FC<modelType> = ({model, scale, position}) => {
 
     return (
         <Canvas gl={{ alpha: true,
@@ -49,8 +54,7 @@ const Model = () => {
             <pointLight color={'0xffffff'} position={[200, 200 , 200]} intensity={1}/>
             <pointLight color={'0xffffff'} position={[-750, 200 , -750]} intensity={1}/>
             <Suspense fallback={false}>
-                {/* <Box position={[0, 0, 0]}/> */}
-                <Scene />
+                <Scene model={model} scale={scale} position={position}/>
             </Suspense>
             <OrbitControls enableZoom={false} autoRotate={true} enablePan={false}
             minPolarAngle={Math.PI / 2}

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import google from "../../public/images/google.jpg";
 import "../../src/app/globals.css";
@@ -29,11 +29,13 @@ type Props = {
 }
 
 const Register:FC<Props> = ({setActive}) => {
-  const { loading, error, fetchRegister, message} = useRegister(state => ({
+  const { loading, error, fetchRegister, status, setStatus} = useRegister(state => ({
     loading: state.loading,
     error: state.error,
     message: state.message,
-    fetchRegister: state.fetchRegister
+    fetchRegister: state.fetchRegister,
+    status: state.status,
+    setStatus: state.setStatus
 }))
 
   const [activeEyePassword, setActiveEyePassword] = useState(true)
@@ -64,19 +66,26 @@ const Register:FC<Props> = ({setActive}) => {
 
   const onSubmit: SubmitHandler<Inputs> = ({name, surname, patronymic, password, email}) => {
     fetchRegister({name, surname, patronymic, password, email});
-    if(message === 'success'){
+  }
+
+  const message = () => {
+    if(status == 201) {
       reset()
       setActive('Авторизация')
-      message === 'success' ? Swal.fire({
+      return Swal.fire({
         position: 'top-end',
         icon: 'success',
         title: 'Вы успешно зарегистрировались!',
         showConfirmButton: false,
         timer: 2000
       })
-      : null
     }
   }
+  
+  useEffect(() => {
+    message()
+    setStatus()
+  }, [status])
 
   const animErrors = {
     hidden: { opacity: 0, x: 20 },

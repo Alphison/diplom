@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CourseStoreRequest;
 use App\Http\Resources\CourseResources;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class CourseController extends Controller
 {
@@ -18,7 +21,6 @@ class CourseController extends Controller
     public function index()
     {
        return CourseResources::collection(Course::all());
-        
     }
 
     /**
@@ -27,22 +29,12 @@ class CourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CourseStoreRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' =>'required|max:255',
-            'description' =>'required|max:255',
-            'price' =>'required|numeric|min:0',
-            'duration' => 'required',
-            'category_id' => 'required',
-            'user_id' =>'required',
-            'profession' => 'required',
-            'goal' => 'required',
-            'model' => 'required|mimes:glb|max:10120',
-            'img_course' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
-        ]);
+        $data = $request->validated();
+        $data['img_course'] = Storage::put('/courses', $data['img_course']);
 
-        $created_course = Course::create($request->validated());
+        $created_course = Course::create($data);
 
         return new CourseResources($created_course);
     }
@@ -65,9 +57,22 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CourseStoreRequest $request, Course $course)
     {
-        //
+        $data = $request->validated();
+
+        $course->name = $data->name;
+        $course->description = $data->description;
+        $course->duration = $data->duration;
+        $course->user_id = $data->user_id;
+        $course->category_id = $data->category_id;
+        $course->profession = $data->profession;
+        $course->img_course = $data->img_course;
+        $course->price = $data->price;
+        $course->goal = $data->goal;
+        $course->update();
+
+        return response($course);
     }
 
     /**
@@ -76,8 +81,10 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

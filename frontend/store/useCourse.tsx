@@ -3,24 +3,26 @@ import { create } from "zustand";
 import { CourseService } from 'services/Courses.service';
 import {CourseType} from "../types/type"
 
+export type CourseDataType = {
+    data: CourseType
+}
+
 type StateCourses = {
-    course: CourseType | null;
+    course: CourseDataType | undefined;
     loading: boolean;
     error: string | null;
-    fetchCourse: (id:string) => void
+    fetchCourse: (id:number) => void
 }
 
 export const useCourse = create<StateCourses>()(immer(set => ({
-    course: null,
+    course: undefined,
     loading: false,
     error: null,
-    fetchCourse: async (id:string) => {
+    fetchCourse: async (id) => {
         set({loading: true})
 
         try {
             const res = await CourseService.getId(id)
-
-            // if(!res.ok) throw new Error('Failed to fetch! Try again')
 
             set({course: res.data})
         } catch(error: any) {

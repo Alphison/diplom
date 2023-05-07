@@ -1,16 +1,15 @@
 export interface CourseType{
-    id: number;
+    id?: number;
     name: string;
     description: string;
-    data: string;
-    count_lesson: number;
+    duration: string;
     user_id: number;
     category_id: number;
     profession: string;
-    img_course: string;
+    img_course?: string;
     goal: string;
     price: number;
-    created_at: Date;
+    created_at?: Date;
 }
 
 export interface CategoryType{
@@ -18,4 +17,38 @@ export interface CategoryType{
     name: string;
     created_at: Date;
     courses: CourseType[];
+}
+
+type VideosType = {
+    id: number;
+    video: string;
+    lesson_id: number;
+    created_at?: Date;
+}
+
+type ImagesType = {
+    id: number;
+    img: string;
+    lesson_id: number;
+    created_at?: Date;
+}
+
+export interface LessonType{
+    id?:number;
+    name: string;
+    description: string;
+    course_id: number;
+    preview?: string;
+    images?: [ImagesType];
+    videos?: [VideosType];
+}
+
+export interface CourseUserBody{
+    course_id: number | undefined;
+    user_id: number | undefined;
+}
+
+export interface LessonUserBody{
+    lesson_id: number | undefined;
+    user_id: number | undefined;
 }

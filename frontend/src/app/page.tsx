@@ -9,20 +9,9 @@ import { useCourses } from "store/useCourses";
 
 
 const Page = () => {
-    const {courses, loading, error, fetchCourses } = useCourses((state) => ({
-        courses: state.courses,
-        loading: state.loading,
-        error: state.error,
-        fetchCourses: state.fetchCourses,
-    }));
-
-    useEffect(() => {
-        fetchCourses()
-    }, [])
-
     return (
         <>
-           <Slider courses={courses}/>
+           <Slider />
         </>
     )
 }

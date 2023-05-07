@@ -9,15 +9,26 @@ import { MyContext } from "components/Header/MyProvider";
 const slides = [
   {
     id: 1,
-    img: "/images/star_planet.jpg",
+    img: "/images/slider_fon.jpg",
+    name: "МОДЕЛИРОВАНИЕ",
+    gif: "/images/gif.gif",
+    gif2: "/images/kot_model.gif",
+    text: "3D моделирование - это процесс создания трехмерных моделей объектов или сцен с помощью компьютерных программ. В основном, это используется в индустрии разработки игр, анимации, архитектурного проектирования, производства, инженерии и медицинском моделировании.",
+    text2: "Программы для 3D моделирования обычно содержат широкий спектр инструментов для создания, редактирования и анимации трехмерных объектов. Они также позволяют работать с различными файловыми форматами для экспорта и импорта моделей. В топ 3 самых популярных программ входят AutoCAD, Blender и SketchUp."
   },
   {
     id: 2,
-    img: "https://f.vividscreen.info/soft/6f0c8f75ee9193799545569a5c8dd021/Itachi-Uchiha-1920x1080.jpg",
+    img: "/images/slider_fon2.jpg",
+    name: "СКУЛЬПТИНГ",
+    gif: "/images/scul.gif",
+    text: "Скульптинг в 3D - это процесс создания трехмерных моделей путем вырезания, деформации и обработки геометрических форм. Этот процесс позволяет художникам и дизайнерам создавать более детализированные и органичные модели, которые являются более реалистичными и естественными по сравнению с моделями, созданными с помощью традиционных методов моделирования."
   },
   {
     id: 3,
-    img: "https://vsthemes.org/uploads/posts/2021-07/1625588298_1040994.webp",
+    img: "/images/slider_fon3.jpg",
+    name: "АНИМАЦИЯ",
+    text: "Анимация 3D моделей – это процесс создания движения и эффектов на 3D объектах при помощи специального компьютерного программного обеспечения. Такие модели могут быть использованы в различных сферах, включая компьютерные игры, кинематограф и рекламу. Визуально анимация 3D моделей предлагает сильный контраст в сравнении с обычной 2D анимацией, так как ее глубина и объемность делают ее значительно более реалистичной и зрелищной.",
+    gif: "/images/anim.gif"
   },
 ];
 
@@ -111,40 +122,44 @@ function App() {
                 <img src={item.img} />
                 <div className="content-slide">
                   <div className="col-content-slide">
-                      <h1 className="slide-name">LOWPOLI</h1>
-                      <div className="info-slide">
-                        <div className="block-info">
-                          <p className="text-block-info">Преподаватель</p>
-                          <h2 className="h2-block-info">ВИКТОР КОТОВ</h2>
-                          <p className="text-block-info">3D-художник, дизайнер существ, скульптор Zbrush. Работает подрядчиком в ID Software. Работал с Mail.ru, Inquake, RJ-games, Geeks, DAGGER CROWN STUDIO.</p>
+                      <h2 className="subname-slide">
+                        Чему можно научиться в нашей школе
+                      </h2>
+                      <h1 className="slide-name">{item.name}</h1>
+                      <div className={ i === 1 ? "info-slide2" : i === 2 ? 'info-slide3' : 'info-slide'}>
+                        <div className="col-info-slide">
+                          <div className="block-info">
+                            <p className="text-block-info">{item.text}</p>
+                          </div>
+                          <div className={i === 0 ? "block-gif" : "block-gif2"}>
+                            <img src={item.gif} alt="" />
+                          </div>
                         </div>
-                        <div className="block-info">
-                            <div className="row_slider-cours">
-                                <div className="column_home-cours">
-                                    <div className="circule"></div>
-                                    <label className="text-col_home-course">
-                                        <p>Уровень знаний</p>
-                                        <p>нормальный</p>
-                                    </label>
-                                </div>
-                                <div className="column_home-cours">
-                                    <div className="circule"></div>
-                                    <label className="text-col_home-course">
-                                        <p>Продолжительность</p>
-                                        <p>10 месяцев</p>
-                                    </label>
-                                </div>
+                        {
+                          i === 0 ? (
+                            <div className="col-info-slide">
+                              <div className="block-gif">
+                                <img src={item.gif2} alt="" />
+                              </div>
+                              <div className="block-info">
+                                <p className="text-block-info">{item.text2}</p>
+                              </div>
                             </div>
-                            <Link href={'#'} className={'btn-slide'}>Подробнее</Link>
-                        </div>
-                        <div className="block-info">
-                          <p className="text-block-info">Освой профессию под руководством лидеров индустрии, которые работали над World Of Tanks, Mortal Shell, «всем известной тундры» и Блицкриг 3, и стань востребованным 3D-художником, который без труда найдёт работы в игровой студии.</p>
-                        </div>
+                          ): null
+                        }
                       </div>
                   </div>
                   <div className="col-content-slide">
                     <div className="blur-model"></div>
-                    <Model />
+                    {
+                      i === 0 && <Model model={'earth_low_poly.glb'} scale={20} position={[0, 0, 0]}/>
+                    }
+                    {
+                      i === 1 && <Model model={'head.glb'} scale={15} position={[0, 199, 0]}/>
+                    }
+                    {
+                      i === 2 && <Model model={'leon.glb'} scale={200} position={[0, -170, 0]}/>
+                    }
                     <div className="circle-model"></div>
                     <div className="circle-model2"></div>
                     <h2 className="inner-block-circle">{cameraRotation}°</h2>
