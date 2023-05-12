@@ -5,7 +5,6 @@ export function Counter({ val, time }) {
   
     useEffect(() => {
       currVal !== val && setTimeout(setCurrVal, time, currVal + 1);
-      console.log(val)
     }, [currVal]);
   
     return <div className="count-stat">{currVal}</div>;

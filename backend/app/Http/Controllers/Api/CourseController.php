@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CourseEditStoreRequest;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Resources\CourseResources;
 use App\Models\Course;
@@ -57,19 +58,22 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CourseStoreRequest $request, Course $course)
+    public function update(CourseEditStoreRequest $request, Course $course)
     {
         $data = $request->validated();
 
-        $course->name = $data->name;
-        $course->description = $data->description;
-        $course->duration = $data->duration;
-        $course->user_id = $data->user_id;
-        $course->category_id = $data->category_id;
-        $course->profession = $data->profession;
-        $course->img_course = $data->img_course;
-        $course->price = $data->price;
-        $course->goal = $data->goal;
+        $course->name = $data['name'];
+        $course->description = $data['description'];
+        $course->duration = $data['duration'];
+        $course->user_id = $data['user_id'];
+        $course->category_id = $data['category_id'];
+        $course->profession = $data['profession'];
+        if($data['img_course']){
+            $img_course = Storage::put('/courses', $data['img_course']);
+            $course->img_course = $img_course;
+        }
+        $course->price = $data['price'];
+        $course->goal = $data['goal'];
         $course->update();
 
         return response($course);

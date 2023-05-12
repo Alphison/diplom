@@ -14,8 +14,31 @@ import { animErrors, animStat } from 'animation/animation'
 import { LessonType } from 'types/type'
 import { useLesson } from 'store/useLessons'
 import { animH1 } from 'animation/animation'
+import { redirect } from 'next/navigation'
+import { uselogin } from 'store/useSign'
 
 const addLesson:FC = ({params}:any) => {
+    const { getToken, access_token, fetchUser, user } = uselogin(state => ({
+        getToken: state.getToken,
+        access_token: state.access_token,
+        fetchUser: state.fetchUser,
+        user: state.user
+    }))
+    
+    useEffect(() => {
+        getToken()
+        fetchUser(access_token)
+    }, [access_token])
+
+    const token = JSON.parse(sessionStorage.getItem('access_token')!)
+    if(!token){
+      redirect('/sign')
+    }
+
+    // if(user?.role !== 'Преподаватель'){
+    //     redirect('/')
+    // }
+
     const [lesson, setLesson] = useState<LessonType>({name: '', description: '', course_id: params.id})
     const [foto, setFoto] = useState()
     const [fotos, setFotos] = useState<File[]>([])
@@ -117,100 +140,103 @@ const addLesson:FC = ({params}:any) => {
           .required('Введите описание урока'),
       })
     
-      const { register, handleSubmit, formState:{errors, isValid}, reset } = useForm<LessonType>({
+    const { register, handleSubmit, formState:{errors, isValid}, reset } = useForm<LessonType>({
         mode: 'onBlur',
         resolver: yupResolver(formSchema)
-      });
+    });
+
   return (
-    <motion.form className='add-course__wrapper add-course__wrapper' onSubmit={(e) => submit(e)} variants={animStat} initial={'hidden'} animate={'visible'}>
-        <h1 className='zag__add-lesson'>Добавить урок</h1>
-        <h3 className="name-image-input">
-            Обложка урока:
-        </h3>
-        <label htmlFor="">
-            <label htmlFor="image" className="wrapper-input">
-                <input type="file" name="preview" id="image" onChange={(e) => onImageChange(e)}/>
-                <Image src={image} width={1234} height={511} alt={'add-image'}/>
-                <div className="ikon_label-image">
-                    <FiDownload />
-                </div>
-            </label>
-            {
-                error ?
-                error.preview?.map((item:any, i:number) => {
-                    return (
-                        <p className="error">{item}</p>
-                    )
-                })
-                : null
-            }
-        </label>
-        <label htmlFor="">
+    <div className='add-course__wrapper-wrapper'>
+        <motion.form className='add-course__wrapper add-course__wrapper' onSubmit={(e) => submit(e)} variants={animStat} initial={'hidden'} animate={'visible'} id='pagw-wrap'>
+            <h1 className='zag__add-lesson'>Добавить урок</h1>
             <h3 className="name-image-input">
-                Дополнительные изображения для урока:
+                Обложка урока:
             </h3>
-            <div className='images__block-lesson_add'>
-                {
-                    images.map(image => {
-                        return (
-                            <motion.div variants={animH1} animate={'visible'} initial={'hidden'} className="img-block-add-lesson">
-                                <Image src={image} width={350} height={200} alt=''/>
-                            </motion.div>
-                        )
-                    })
-                }
-                <label htmlFor="images" className="wrapper-input-images">
-                    <input type="file" multiple name="images" id="images" onChange={(e) => onImagesChange(e)}/>
+            <label htmlFor="">
+                <label htmlFor="image" className="wrapper-input">
+                    <input type="file" name="preview" id="image" onChange={(e) => onImageChange(e)}/>
+                    <Image src={image} width={1234} height={511} alt={'add-image'}/>
                     <div className="ikon_label-image">
-                        <BsPlus />
+                        <FiDownload />
                     </div>
                 </label>
-            </div>
-            {
-                error &&
-                Object.keys(error).map((key) => {
-                    if(key.includes('img')){
-                        for (let index = 0; index < error[key].length; index++) {
-                                return (
-                                    <p className='error'>{index}-{error[key][index]}</p>
-                                )
-                            
-                        }
+                {
+                    error ?
+                    error.preview?.map((item:any, i:number) => {
+                        return (
+                            <p className="error">{item}</p>
+                        )
+                    })
+                    : null
+                }
+            </label>
+            <label htmlFor="">
+                <h3 className="name-image-input">
+                    Дополнительные изображения для урока:
+                </h3>
+                <div className='images__block-lesson_add'>
+                    {
+                        images.map(image => {
+                            return (
+                                <motion.div variants={animH1} animate={'visible'} initial={'hidden'} className="img-block-add-lesson">
+                                    <Image src={image} width={350} height={200} alt=''/>
+                                </motion.div>
+                            )
+                        })
                     }
-
-                    return null
-                })
-            }
-        </label>
-        <label htmlFor="" className='label-add-course'>
-            <input {...register('name')} type="text" placeholder='Название курса' className='inp-text-add' onChange={(e) => handleInput(e)}/>
-            {errors?.name && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.name.message}</motion.p>}
-        </label>
-        <label htmlFor="" className='label-add-course'>
-            <input name='video[]' multiple type="file" placeholder='Видео' className='inp-text-add' onChange={(e) => onVideosChange(e)}/>
-            {
-                error &&
-                Object.keys(error).map((key) => {
-                    console.log(error)
-                    if(key.includes('video')){
-                        for (let index = 0; index < error[key].length; index++) {
-                                return (
-                                    <p className='error'>{index}-{error[key][index]}</p>
-                                )
-                            
+                    <label htmlFor="images" className="wrapper-input-images">
+                        <input type="file" multiple name="images" id="images" onChange={(e) => onImagesChange(e)}/>
+                        <div className="ikon_label-image">
+                            <BsPlus />
+                        </div>
+                    </label>
+                </div>
+                {
+                    error &&
+                    Object.keys(error).map((key) => {
+                        if(key.includes('img')){
+                            for (let index = 0; index < error[key].length; index++) {
+                                    return (
+                                        <p className='error'>{index}-{error[key][index]}</p>
+                                    )
+                                
+                            }
                         }
-                    }
 
-                    return null
-                })
-            }
-        </label>
-        <label htmlFor="" className='label-add-course'>
-            <textarea {...register('description')} id="" placeholder='Описание урока' onChange={(e) => handleInput(e)}></textarea>
-            {errors?.description && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.description.message}</motion.p>}
-        </label>
-        <button className='btn-add-course' disabled={!isValid} onClick={(e) => submit(e)}>{loading ? <Loader /> : 'Добавить'}</button>
-    </motion.form>
+                        return null
+                    })
+                }
+            </label>
+            <label htmlFor="" className='label-add-course'>
+                <input {...register('name')} type="text" placeholder='Название курса' className='inp-text-add' onChange={(e) => handleInput(e)}/>
+                {errors?.name && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.name.message}</motion.p>}
+            </label>
+            <label htmlFor="" className='label-add-course'>
+                <input name='video[]' multiple type="file" placeholder='Видео' className='inp-text-add' onChange={(e) => onVideosChange(e)}/>
+                {
+                    error &&
+                    Object.keys(error).map((key) => {
+                        console.log(error)
+                        if(key.includes('video')){
+                            for (let index = 0; index < error[key].length; index++) {
+                                    return (
+                                        <p className='error'>{index}-{error[key][index]}</p>
+                                    )
+                                
+                            }
+                        }
+
+                        return null
+                    })
+                }
+            </label>
+            <label htmlFor="" className='label-add-course'>
+                <textarea {...register('description')} id="" placeholder='Описание урока' onChange={(e) => handleInput(e)}></textarea>
+                {errors?.description && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.description.message}</motion.p>}
+            </label>
+            <button className='btn-add-course' disabled={!isValid} onClick={(e) => submit(e)}>{loading ? <Loader /> : 'Добавить'}</button>
+        </motion.form>
+    </div>
   )
 }
 

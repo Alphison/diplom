@@ -72,8 +72,9 @@ export const useCourses = create<StateCourses>()(immer(set => ({
         set({loading: true})
         try {
             const res = await CourseService.update(data, id)
+            set({status: res.status})
         } catch(error: any) {
-            set({error: error.response.data})
+            set({error: error.response.data.errors.img_course})
         } finally {
             set({loading: false})
         }

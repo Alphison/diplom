@@ -63,7 +63,7 @@ const Navbar = () => {
           access_token && <Link href="/profile" className="menu-item"><FaUserAlt />Профиль</Link>
         }
         {
-          access_token | user?.role === 'Админ' && <Link href="/admin" className="menu-item"><MdAdminPanelSettings />Админ панель</Link>
+          access_token | user?.role === 'Админ' && <Link href="/users" className="menu-item"><MdAdminPanelSettings />Админ панель</Link>
         }
         {
           access_token | user?.role === 'Преподаватель' && <Link href="/mycourses" className="menu-item"><IoIosSchool />Мои курсы</Link>

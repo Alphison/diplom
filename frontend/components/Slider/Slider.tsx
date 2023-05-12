@@ -117,7 +117,7 @@ function App() {
         >
           {slides.map((item, i) => {
             return (
-              <div className={active === i ? "slide active" : "slide"}>
+              <div key={i} className={active === i ? "slide active" : "slide"}>
                 <div style={{  background: 'black', opacity: '0.4', width: '100%', height: '100%', position: 'absolute'}}></div>
                 <img src={item.img} />
                 <div className="content-slide">

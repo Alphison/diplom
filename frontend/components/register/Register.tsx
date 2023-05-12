@@ -1,6 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import Image from "next/image";
-import google from "../../public/images/google.jpg";
 import "../../src/app/globals.css";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
@@ -147,15 +145,6 @@ const Register:FC<Props> = ({setActive}) => {
         </div>
         <button className="btn-sign" disabled={!isValid}>{loading ? <div className="loader-btn"><Loader /></div> : 'Регистрация'}</button>
       </form>
-      <div className="or">
-        <hr />
-        <p>Или</p>
-        <hr />
-      </div>
-      <button className="google-btn">
-        <Image src={google} width={22} height={22} alt={"google-logo"} />
-        Продолжить с Google
-      </button>
     </div>
   );
 };

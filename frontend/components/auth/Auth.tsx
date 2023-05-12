@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import "../../src/app/globals.css";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
@@ -107,15 +106,6 @@ useEffect(() => {
         </div>
         <button className="btn-sign" disabled={!isValid}>{loading ? <div className="loader-btn"><Loader /></div> : 'Войти'}</button>
       </form>
-      <div className="or">
-        <hr />
-        <p>Или</p>
-        <hr />
-      </div>
-      <button className="google-btn">
-        <Image src={"/images/google.jpg"} width={22} height={22} alt={"google-logo"}/>
-        Продолжить с Google
-      </button>
     </div>
   );
 };

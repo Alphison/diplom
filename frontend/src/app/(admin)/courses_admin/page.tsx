@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useState } from 'react'
+"use client"
+
+import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion";
 import { animStat } from 'animation/animation';
 import { useCategory, useCourses } from 'store/useCourses';
@@ -7,19 +9,11 @@ import { AiFillDelete } from 'react-icons/ai';
 import { AiFillEdit } from 'react-icons/ai'
 import Swal from 'sweetalert2';
 import { Loader } from '@react-three/drei';
-import { CourseDataType, useCourse } from 'store/useCourse';
-import { CourseType } from 'types/type';
+import { useRouter } from 'next/navigation';
 
-interface AddCourseType{
-  setActiveRazdel: (text:string) => void;
-  setCourse: (course: CourseDataType) => void;
-}
+const Courses = () => {
+  const router = useRouter()
 
-const Courses:FC<AddCourseType> = ({setActiveRazdel, setCourse}) => {
-    const {course, fetchCourse} = useCourse(state => ({
-      course: state.course,
-      fetchCourse: state.fetchCourse
-  }))
     const {courses, fetchCourses, fetchCourseDelete, deleteCourse, error, loading} = useCourses(state => ({
       courses: state.courses,
       fetchCourses: state.fetchCourses,
@@ -66,9 +60,7 @@ const Courses:FC<AddCourseType> = ({setActiveRazdel, setCourse}) => {
     }
 
     const handleSetEdit = (id:any) => {
-      fetchCourse(id)
-      setCourse(course!)
-      setActiveRazdel('Редактирование')
+      router.push(`/editCourse/${id}`)
     }
 
     if(loading){
@@ -90,7 +82,7 @@ const Courses:FC<AddCourseType> = ({setActiveRazdel, setCourse}) => {
         </form>
         <form action="">
           <label className="wrapper-search">
-            <input type="text" className="inp-search" placeholder="Кого найти?" onChange={(e) => setSearch(e.target.value)}/>
+            <input type="text" className="inp-search" placeholder="Какой курс найти?" onChange={(e) => setSearch(e.target.value)}/>
             <div className="ikon-search">
                 <RiSearchLine />
             </div>

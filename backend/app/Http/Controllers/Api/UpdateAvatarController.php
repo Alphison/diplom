@@ -12,7 +12,7 @@ class UpdateAvatarController extends Controller
     public function updateAvatar(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'ava' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
+            'ava' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
         ],
         [
             'ava.image' => 'Файл должен быть изображением',

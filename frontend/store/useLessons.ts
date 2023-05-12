@@ -21,7 +21,7 @@ type StateLessons = {
     // fetchUpdateCourse: (data:CourseType, id:number,) => void
 }
 
-export const useLesson = create<StateLessons>()(immer(set => ({
+export const useLessons = create<StateLessons>()(immer(set => ({
     lessons: [],
     loading: false,
     error: null,

@@ -2,17 +2,28 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import '../../src/app/globals.css'
+import '../../globals.css'
 import { motion } from "framer-motion";
 import { animStat } from "animation/animation";
-import { UsersType } from "store/useUser";
+import { UsersType, useUsers } from "store/useUser";
 import Loader from "public/loader/Loader";
 import { TiUserDelete } from "react-icons/ti" 
 import Swal from "sweetalert2";
 
-const Users:FC<UsersType> = ({users, loading, fetchUsers, fetchUserDelete, error, deleteUser, fetchUserUpdate, updateUser}) => {
+const Users:FC<UsersType> = () => {
   const [cat, setCat] = useState<string>('')
   const [search, setSearch] = useState<string>('')
+
+  const {users, loading, fetchUsers, fetchUserDelete, error, deleteUser, fetchUserUpdate, updateUser} = useUsers(state => ({
+    users: state.users,
+    loading: state.loading,
+    fetchUsers: state.fetchUsers,
+    fetchUserDelete: state.fetchUserDelete,
+    error: state.error,
+    deleteUser: state.deleteUser,
+    fetchUserUpdate: state.fetchUserUpdate,
+    updateUser: state.updateUser
+  }))
 
   const usersData = users?.filter(item => item.role.includes(cat))
 
@@ -70,7 +81,7 @@ const Users:FC<UsersType> = ({users, loading, fetchUsers, fetchUserDelete, error
       <div className="row__tabel">
         <form>
           <select name="" id="" className="users-inp" onChange={(e) => setCat(e.target.value)}>
-            <option value="">Все</option>
+            <option >Все</option>
             <option value="Пользователь">Пользователи</option>
             <option value="Ученик">Ученики</option>
             <option value="Преподаватель">Преподаватели</option>
@@ -98,7 +109,7 @@ const Users:FC<UsersType> = ({users, loading, fetchUsers, fetchUserDelete, error
                usersDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
                usersDataSearch?.map((item) => {
                 return (
-                  <tr>
+                  <tr key={item.id}>
                       <td>{item.id}</td>
                       <td>{item.surname} {item.name} {item.patronymic}</td>
                       <td>{item.email}</td>

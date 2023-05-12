@@ -11,6 +11,7 @@ import { useLesson } from 'store/useLessons'
 import Swal from 'sweetalert2'
 import { useCourseUser } from 'store/useCourseUser'
 import { useUsers } from 'store/useUser'
+import { redirect } from 'next/navigation'
 
 const Mycourses = () => {
     const router = useRouter();
@@ -76,9 +77,13 @@ const Mycourses = () => {
         })
       }
 
-    if(!count_courses){
-        return <h2>У вас пока не курсов...</h2>
+    const token = JSON.parse(sessionStorage.getItem('access_token')!)
+    if(!token){
+        redirect('/sign')
     }
+    if(user?.role !== 'Преподаватель'){
+        redirect('/')
+      }
     
   return (
     <div className="mycourses" id="page-wrap">
@@ -91,6 +96,8 @@ const Mycourses = () => {
             </p>
         </div>
         {
+            !count_courses ? <h2 className='message_mycourses'>У вас пока не курсов...</h2> :
+
             courses_prepod?.map(item => {
                 const lessons_course = lessons.filter(lesson => lesson.course_id === item.id)
                 const course_user2 = course_user?.filter(item2 => item2.course_id === item.id)

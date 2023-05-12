@@ -12,18 +12,19 @@ import { uselogin } from 'store/useSign'
 import Image from 'next/image'
 import Loader from 'public/loader/Loader'
 import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation';
 
 const page = () => {
-    const router = useRouter()
     const [profile, setProfile] = useState(true)
     const [image, setImage] = useState('/images/null.png')
     const [ava, setAva] = useState('')
-    const { access_token, fetchUpdateAvatar, getToken, error, loading } = uselogin(state => ({
+    const { access_token, fetchUpdateAvatar, getToken, error, loading, user } = uselogin(state => ({
         access_token: state.access_token,
         fetchUpdateAvatar: state.fetchUpdateAvatar,
         error: state.error,
         loading: state.loading,
-        getToken: state.getToken
+        getToken: state.getToken,
+        user: state.user
     }))
 
     const onImageChange = (event:any) => {
@@ -40,10 +41,6 @@ const page = () => {
         fetchUpdateAvatar({data, access_token})
     }
 
-    const { user } = uselogin(state => ({
-        user: state.user
-      }))
-
     const animAva = {
         visible: (i:number) => ({
             opacity: 1,
@@ -58,15 +55,18 @@ const page = () => {
         }
     }
 
+
+
     // const handleSubmitImg: SubmitHandler<Inputs> = ({data}:any) => {
     //     console.log(data)
     // }
 
     const src = `${process.env.NEXT_PUBLIC_API}${user?.ava}`;
 
-    // if(!access_token){
-    //     router.push('/sign')
-    // }
+    const token = JSON.parse(sessionStorage.getItem('access_token')!)
+    if(!token){
+        redirect('/sign')
+    }
 
   return (
     <div className='profile-wrapper' id='page-wrap'>
