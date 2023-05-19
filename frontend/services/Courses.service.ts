@@ -1,11 +1,14 @@
 import { CourseDataType } from 'store/useCourse';
 import { CourseType } from './../types/type';
-import axios, { AxiosRequestConfig } from "axios"
+import axios from "axios"
 
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API
 
-
+export type dataCourseType = {
+    id?: number,
+    active: string
+}
 
 export const CourseService = {
     async getAll(){
@@ -45,4 +48,11 @@ export const CourseService = {
             }
         })
     },
+    async updateCourseActive(dataCourse:dataCourseType){
+        return axios.post('api/course_update', dataCourse, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+    }
 }

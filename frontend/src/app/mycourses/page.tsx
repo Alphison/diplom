@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { animStat } from 'animation/animation'
 import { useRouter } from 'next/navigation'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
-import { useLesson } from 'store/useLessons'
+import { useLessons } from 'store/useLessons'
 import Swal from 'sweetalert2'
 import { useCourseUser } from 'store/useCourseUser'
 import { useUsers } from 'store/useUser'
@@ -23,7 +23,7 @@ const Mycourses = () => {
     const { course_user, fetchCourseUser } = useCourseUser(state => ({course_user: state.course_user, fetchCourseUser: state.fetchCourseUser}))
     const {users, fetchUsers} = useUsers(state => ({users: state.users, fetchUsers: state.fetchUsers}))
 
-    const {lessons, fetchLessons, fetchLessonDelete, deleteLesson, error} = useLesson(state => ({
+    const {lessons, fetchLessons, fetchLessonDelete, deleteLesson, error} = useLessons(state => ({
         lessons: state.lessons,
         fetchLessons: state.fetchLessons,
         fetchLessonDelete: state.fetchLessonDelete,
@@ -38,17 +38,9 @@ const Mycourses = () => {
         fetchUsers()
     }, [])
 
-    const { getToken, access_token, fetchUser, user } = uselogin(state => ({
-        getToken: state.getToken,
-        access_token: state.access_token,
-        fetchUser: state.fetchUser,
+    const { user } = uselogin(state => ({
         user: state.user
       }))
-  
-      useEffect(() => {
-        getToken()
-        fetchUser(access_token)
-      }, [access_token])
 
       const courses_prepod = courses?.filter(item => item.user_id === user?.id)
       const count_courses = courses_prepod?.length
@@ -81,9 +73,12 @@ const Mycourses = () => {
     if(!token){
         redirect('/sign')
     }
-    if(user?.role !== 'Преподаватель'){
-        redirect('/')
-      }
+    
+    if(user){
+        if(user?.role !== 'Преподаватель'){
+            redirect('/')
+          }
+    }
     
   return (
     <div className="mycourses" id="page-wrap">

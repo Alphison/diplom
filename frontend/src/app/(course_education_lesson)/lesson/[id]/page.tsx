@@ -14,8 +14,10 @@ import "swiper/css/pagination";
 import { uselogin } from 'store/useSign'
 import { useLessonUser } from 'store/useLessonUser'
 import Swal from 'sweetalert2'
+import { redirect, useRouter } from 'next/navigation'
 
 const Lesson = ({params}:any) => {
+  const router = useRouter()
   const {lesson, loading, error, fetchLesson} = useLesson(state => ({
     lesson: state.lesson,
     loading: state.loading,
@@ -23,12 +25,8 @@ const Lesson = ({params}:any) => {
     fetchLesson: state.fetchLesson
   }))
 
-  const {access_token, getToken, fetchUser, user, fetchUpdateRole} = uselogin(state => ({
-    access_token: state.access_token,
-    getToken: state.getToken,
-    fetchUser: state.fetchUser,
+  const { user } = uselogin(state => ({
     user: state.user,
-    fetchUpdateRole: state.fetchUpdateRole
   }))
 
   const {lesson_user, fetchLessonUser, fetchAddLessonUser, status, addLessonUser} = useLessonUser(state => ({
@@ -47,13 +45,14 @@ const Lesson = ({params}:any) => {
   const handleAddLessonCourse = () => {
     fetchAddLessonUser({lesson_id: lesson?.data.id, user_id: user?.id})
     addLessonUser(data)
+    router.back()
     return Swal.fire({
       position: 'top-end',
       icon: 'success',
       title: 'Вы успешно прошли урок!',
       showConfirmButton: false,
       timer: 2000
-  })
+    })
   }
 
 
@@ -62,8 +61,6 @@ const Lesson = ({params}:any) => {
   useEffect(() => {
     fetchLessonUser()
     fetchLesson(params.id)
-    fetchUser(access_token)
-    getToken()
   }, [])
 
   const src = `${process.env.NEXT_PUBLIC_API}storage/${lesson?.data.preview}`
@@ -91,19 +88,32 @@ const Lesson = ({params}:any) => {
 
 //   console.log(copy)
 // }
-
 const [image, setImage] = useState<string | null>()
 const handleImage = (src2:string) => {
   setImage(src2)
+}
+
+const token = JSON.parse(sessionStorage.getItem('access_token')!)
+  if(!token){
+    redirect('/sign')
+  }
+
+  if(user){
+    if(user?.role !== 'Ученик'){
+      redirect('/')
+    }
+  }
+
+  const style = {
+    background: `url(${src}) 0% 0% / cover no-repeat`,
 }
 
   return (
     <div className='content__course-education'>
         {image ? 
         <ModelLesson setImage={setImage} image={image}/> : null}
-        <div className="preview__course">
+        <div className="preview__course" style={style}>
           <div className="wrapper-preview__course"></div>
-          <Image width={124} height={70} loader={() => src} src={src} alt="" />
           <div className="info-preview__course">
             <div className="mini-preview__course">
               <Image loader={() => src} src={src} width={1558} height={425} alt="" />
@@ -137,43 +147,45 @@ const handleImage = (src2:string) => {
                   const src2 = `${process.env.NEXT_PUBLIC_API}storage/${image.img}`
                   return (
                     <SwiperSlide onClick={() => handleImage(src2)}>
-                      <Image width={260} height={150} loader={() => src2} src={src2} alt="" />
+                        <Image width={260} height={150} loader={() => src2} src={src2} alt="" />
                     </SwiperSlide>
                   )
                 })}
             </Swiper>
           </div>
         </div>
-        <div className="videos-lesson">
-          <div className="hr__videos-lesson"></div>
-          {
-            lesson?.data.videos?.map((item, i) => {
-              // const video = state.filter((item2:any) => item2.id === item.id);
-              // console.log(video)
-              return(
-                <div className="video-block">
-                  <h1 className="id-video">
-                  {i + 1}
-                  </h1>
-                  <div className="video">
-                    <ReactPlayer 
-                      url={`${process.env.NEXT_PUBLIC_API}storage/${item.video}`}
-                      controls={true}
-                      playing={false}
-                      width="100%"
-                      height="100%"
-                    />
-                    {/* <ControlsVideo
-                    /> */}
+        <div className="videos-lessons-wrapper">
+          <div className="videos-lesson">
+            <div className="hr__videos-lesson"></div>
+            {
+              lesson?.data.videos?.map((item, i) => {
+                // const video = state.filter((item2:any) => item2.id === item.id);
+                // console.log(video)
+                return(
+                  <div className="video-block">
+                    <h1 className="id-video">
+                    {i + 1}
+                    </h1>
+                    <div className="video">
+                      <ReactPlayer 
+                        url={`${process.env.NEXT_PUBLIC_API}storage/${item.video}`}
+                        controls={true}
+                        playing={false}
+                        width="100%"
+                        height="100%"
+                      />
+                      {/* <ControlsVideo
+                      /> */}
+                    </div>
                   </div>
-                </div>
-              )
-            })
+                )
+              })
+            }
+          </div>
+          {
+            !lesson_user_have && <button className="finish-lesson" onClick={() => handleAddLessonCourse()}>Пометить урок как завершенный</button>
           }
         </div>
-        {
-          !lesson_user_have && <button className="finish-lesson" onClick={() => handleAddLessonCourse()}>Пометить урок как завершенный</button>
-        }
     </div>
   )
 }

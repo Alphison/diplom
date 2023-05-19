@@ -8,12 +8,12 @@ import { IoBook } from "react-icons/io5";
 import { TbCategory } from "react-icons/tb";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Counter } from "../../../hooks/useAnimCount"
 import { animH1, animStat, animStat2, animStat3 } from "animation/animation";
 import { useUsers } from "store/useUser";
 import { redirect, useRouter } from "next/navigation"
 import { uselogin } from "store/useSign";
 import { useCourses } from "store/useCourses";
+import { HiArrowLeft } from "react-icons/hi";
 
 const buttons = [
   {
@@ -46,6 +46,7 @@ const buttons = [
 
 
 const Layout = ({children}: {children: React.ReactNode}) => {
+  const [activeMenu, setActiveMenu] = useState(false)
   const router = useRouter()
   const [activeRazdel, setActiveRazdel] = useState('Пользователи');
   const { fetchUsers, users} = useUsers(state => ({
@@ -59,48 +60,48 @@ const Layout = ({children}: {children: React.ReactNode}) => {
   const prepods = users?.filter(item => item.role === 'Преподаватель')
   const val_prepods = prepods?.length
 
-  const { getToken, access_token, fetchUser, user } = uselogin(state => ({
-    getToken: state.getToken,
-    access_token: state.access_token,
-    fetchUser: state.fetchUser,
+  const { user } = uselogin(state => ({
     user: state.user
   }))
 
   useEffect(() => {
-    getToken()
-    fetchCourses()
-    fetchUser(access_token)
     fetchUsers()
-  }, [access_token])
+    fetchCourses()
+  }, [])
 
   const token = JSON.parse(sessionStorage.getItem('access_token')!)
   if(!token){
     redirect('/sign')
   }
 
-    // if(user?.role !== 'Админ'){
-    //     router.push('/')
-    // }
+  if(user){
+    if(user?.role !== 'Админ'){
+      router.push('/')
+    }
+  }
 
   return (
     <div className="admin" id="page-wrap">
-      <div className="admin-menu">
-        <div className="admin-menu-inner">
-          {
-            buttons.map((item) => {
-              return(
-                <button
-                    key={item.name}
-                    onClick={() => {
-                        router.push(item.href)
-                        setActiveRazdel(item.name)
-                    }}
-                    className={activeRazdel === item.name ? "btn-meny-admin active" : "btn-meny-admin"}>
-                    {item.icon}{item.name}
-                </button>
-              )
-            })
-          }
+      <div className={activeMenu ? "admin-menu active" : "admin-menu"}>
+        <div className="admin-menu-wrapper">
+          <div className="admin-menu-inner">
+            <button className="menu-btn-setActive" onClick={() => setActiveMenu(!activeMenu)}><HiArrowLeft className={activeMenu ? "svg-arrow active" : "svg-arrow"}/></button>
+            {
+              buttons.map((item) => {
+                return(
+                  <button
+                      key={item.name}
+                      onClick={() => {
+                          router.push(item.href)
+                          setActiveRazdel(item.name)
+                      }}
+                      className={activeRazdel === item.name ? "btn-meny-admin active" : "btn-meny-admin"}>
+                      {item.icon}{item.name}
+                  </button>
+                )
+              })
+            }
+          </div>
         </div>
       </div>
       <div className="admin-wrapper" id="page-wrap">
@@ -109,7 +110,7 @@ const Layout = ({children}: {children: React.ReactNode}) => {
           <div className="stats_site">
             <motion.div variants={animStat} custom={1} initial={'hidden'} animate={'visible'} className="stat-site">
               <div className="col__stat-site">
-                <Counter val={val} time={150}/>
+                <div className="count-stat">{val}</div>
                 <p className="name__count-stat">
                   Пользователя
                 </p>
@@ -120,7 +121,7 @@ const Layout = ({children}: {children: React.ReactNode}) => {
             </motion.div>
             <motion.div variants={animStat2} custom={2} initial={'hidden'} animate={'visible'} className="stat-site">
               <div className="col__stat-site">
-                <Counter val={val_courses} time={200}/>
+                <div className="count-stat">{val_courses}</div>
                 <p className="name__count-stat">
                 Курса
                 </p>
@@ -131,7 +132,7 @@ const Layout = ({children}: {children: React.ReactNode}) => {
             </motion.div>
             <motion.div variants={animStat3} custom={3} initial={'hidden'} animate={'visible'} className="stat-site">
               <div className="col__stat-site">
-                <Counter val={val_prepods} time={250}/>
+                <div className="count-stat">{val_prepods}</div>
                 <p className="name__count-stat">
                 Преподавателя
                 </p>
@@ -140,6 +141,23 @@ const Layout = ({children}: {children: React.ReactNode}) => {
                 <Image src="/images/prepod_svg.svg" alt="" width={85} height={85}/>
               </div>
             </motion.div>
+          </div>
+          <div className="buttons__mobile">
+            {
+              buttons.map((item) => {
+                return(
+                  <button
+                      key={item.name}
+                      onClick={() => {
+                          router.push(item.href)
+                          setActiveRazdel(item.name)
+                      }}
+                      className={activeRazdel === item.name ? "btn-meny-admin active" : "btn-meny-admin"}>
+                      {item.icon}{item.name}
+                  </button>
+                )
+              })
+            }
           </div>
           <h2 className="name-razdel">{activeRazdel}</h2>
           {

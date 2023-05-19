@@ -1,12 +1,12 @@
-export const interpolateBetweenColors = (
-    fromColor:any,
-    toColor:any,
-    percent:number
-  ) => {
-    const delta = percent / 100;
-    const r = Math.round(toColor.r + (fromColor.r - toColor.r) * delta);
-    const g = Math.round(toColor.g + (fromColor.g - toColor.g) * delta);
-    const b = Math.round(toColor.b + (fromColor.b - toColor.b) * delta);
+export function getColorByPercentage(percentage: number) {
+  let red = 155;
+  let green = 0;
   
-    return `rgb(${r}, ${g}, ${b})`;
-  };
+  if (percentage > 50) {
+    green = Math.round(5.1 * percentage);
+  } else {
+    red = Math.round(510 - 5.1 * percentage);
+  }
+
+  return `rgb(${red}, ${green}, 0)`;
+}

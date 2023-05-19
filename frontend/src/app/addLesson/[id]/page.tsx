@@ -12,38 +12,32 @@ import * as Yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { animErrors, animStat } from 'animation/animation'
 import { LessonType } from 'types/type'
-import { useLesson } from 'store/useLessons'
+import { useLessons } from 'store/useLessons'
 import { animH1 } from 'animation/animation'
 import { redirect } from 'next/navigation'
 import { uselogin } from 'store/useSign'
 
 const addLesson:FC = ({params}:any) => {
-    const { getToken, access_token, fetchUser, user } = uselogin(state => ({
-        getToken: state.getToken,
-        access_token: state.access_token,
-        fetchUser: state.fetchUser,
+    const { user } = uselogin(state => ({
         user: state.user
     }))
-    
-    useEffect(() => {
-        getToken()
-        fetchUser(access_token)
-    }, [access_token])
 
     const token = JSON.parse(sessionStorage.getItem('access_token')!)
     if(!token){
       redirect('/sign')
     }
 
-    // if(user?.role !== 'Преподаватель'){
-    //     redirect('/')
-    // }
+    if(user){
+        if(user?.role !== 'Преподаватель'){
+            redirect('/')
+        }
+    }
 
     const [lesson, setLesson] = useState<LessonType>({name: '', description: '', course_id: params.id})
     const [foto, setFoto] = useState()
     const [fotos, setFotos] = useState<File[]>([])
     const [videos, setVideos] = useState<File[]>([])
-    const { fetchAddLesson, error, status, loading, setStatus } = useLesson(state => ({
+    const { fetchAddLesson, error, status, loading, setStatus } = useLessons(state => ({
         fetchAddLesson: state.fetchAddLesson,
         error: state.error, status: state.status,
         loading: state.loading,

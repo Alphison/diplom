@@ -96,39 +96,41 @@ const Users:FC<UsersType> = () => {
           </label>
         </form>
       </div>
-      <table className="table_users" cellSpacing="0">
-        <tbody>
-            <tr>
-                <th>id</th>
-                <th>ФИО</th>
-                <th>Email</th>
-                <th>Роль</th>
-                <th>Действия</th>
-            </tr>
-            {
-               usersDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
-               usersDataSearch?.map((item) => {
-                return (
-                  <tr key={item.id}>
-                      <td>{item.id}</td>
-                      <td>{item.surname} {item.name} {item.patronymic}</td>
-                      <td>{item.email}</td>
-                      <td>{item.role}</td>
-                      <td>
-                        {
-                          item.role === 'Пользователь' && <button className="btn-up-user" onClick={() => modalFunc2(item.id, 'Преподаватель')}>Повысить до преподавателя</button>
-                        }
-                        {
-                          item.role === 'Преподаватель' && <button className="btn-down-user" onClick={() => modalFunc2(item.id, 'Пользователь')}>Понизить до пользователя</button>
-                        }
-                        <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><TiUserDelete /></button>
-                      </td>
-                  </tr>
-                )
-              })
-            }
-        </tbody>
-      </table>
+      <div className="table-scroll">
+        <table className="table_users" cellSpacing="0">
+          <tbody>
+              <tr>
+                  <th>id</th>
+                  <th>ФИО</th>
+                  <th>Email</th>
+                  <th>Роль</th>
+                  <th>Действия</th>
+              </tr>
+              {
+                usersDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
+                usersDataSearch?.map((item) => {
+                  return (
+                    <tr key={item.id}>
+                        <td>{item.id}</td>
+                        <td>{item.surname} {item.name} {item.patronymic}</td>
+                        <td>{item.email}</td>
+                        <td>{item.role}</td>
+                        <td className="btns-table">
+                          {
+                            item.role === 'Пользователь' && <button className="btn-up-user" onClick={() => modalFunc2(item.id, 'Преподаватель')}>Повысить до преподавателя</button>
+                          }
+                          {
+                            item.role === 'Преподаватель' && <button className="btn-down-user" onClick={() => modalFunc2(item.id, 'Пользователь')}>Понизить до пользователя</button>
+                          }
+                          <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><TiUserDelete /></button>
+                        </td>
+                    </tr>
+                  )
+                })
+              }
+          </tbody>
+        </table>
+      </div>
     </motion.div>
   );
 };

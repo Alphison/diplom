@@ -5,20 +5,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Sling as Hamburger } from 'hamburger-react'
 import { MyContext } from "./MyProvider";
-import { usePathname } from "next/navigation";
 import {motion, useTransform, useViewportScroll} from "framer-motion" 
+import { usePathname } from "next/navigation";
 
 const Header: React.FC = () => {
 
     const [isOpen, setOpen] = useState(false)
 
     const ctx = useContext(MyContext)
-    
-    const pathname = usePathname()
-
-    const url = pathname?.includes(`/course_education`) || pathname?.includes(`/lesson`)
 
     const {scrollY} = useViewportScroll()
+
+    const pathname = usePathname()
+
+    const url = pathname?.includes(`/course_education`)
 
     const offsetY = [0, 75]
 
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
         <Image src="/images/logo.svg" width={40} height={44} alt={""} />
       </Link>
       <div onClick={ctx.toggleMenu} className={"burger"}>
-        <Hamburger rounded toggled={isOpen} toggle={setOpen} size={30} direction="right" color="#ffffff"/>
+        <Hamburger rounded toggled={ctx.isMenuOpen} toggle={setOpen} size={30} direction="right" color="#ffffff"/>
       </div>
     </motion.header>
   );

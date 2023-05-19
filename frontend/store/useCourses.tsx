@@ -1,6 +1,6 @@
 import { immer } from 'zustand/middleware/immer'
 import { create } from "zustand";
-import { CourseService } from 'services/Courses.service';
+import { CourseService, dataCourseType } from 'services/Courses.service';
 import {CourseType, CategoryType} from "../types/type"
 import { CategoryService } from 'services/Category.service';
 import { LessonService } from 'services/Lesson.service';
@@ -16,13 +16,19 @@ type StateCourses = {
     fetchCourseDelete: (id:number) => void;
     deleteCourse: (id:number) => void;
     fetchUpdateCourse: (data:CourseType, id:number,) => void;
+    fetchCourseUpdateActive: (data:dataCourseType) => void;
 }
 
 type StateCategory = {
     categories: CategoryType[];
     loading: boolean;
+    status: number | null;
     error: string | null;
     fetchCategory: () => void;
+    fetchCategoryDelete: (id:number) => void;
+    setStatus: () => void;
+    deleteCategory: (id:number) => void;
+    fetchAddCategory: (data:CategoryType) => void;
 }
 
 export const useCourses = create<StateCourses>()(immer(set => ({
@@ -79,16 +85,26 @@ export const useCourses = create<StateCourses>()(immer(set => ({
             set({loading: false})
         }
     },
+    fetchCourseUpdateActive: async (data) => {
+        set({loading: true})
+        try {
+            await CourseService.updateCourseActive(data)
+        } catch(error: any) {
+            set({error: error.response.data.errors})
+        } finally {
+            set({loading: false})
+        }
+    },
     deleteCourse: (id:number) => {
         set((state) => {state.courses = state.courses?.filter(item  => item.id !== id)})
     },
     setStatus: () => set({status: null})
-
 })))
 
 export const useCategory = create<StateCategory>()(immer(set => ({
     categories: [],
     loading: false,
+    status: null,
     error: null,
     fetchCategory: async () => {
         set({loading: true})
@@ -104,5 +120,33 @@ export const useCategory = create<StateCategory>()(immer(set => ({
         } finally {
             set({loading: false})
         }
-    }
+    },
+    fetchAddCategory: async (data) => {
+        set({loading: true})
+
+        try {
+            const res = await CategoryService.addCat(data)
+            set({status: res.status})
+
+        } catch (error:any) {
+            set({error: error.response.data.errors.img_course})
+        }finally{
+            set({loading: false})
+            // set({error: null})
+        }
+    },
+    fetchCategoryDelete: async (id:number) => {
+        set({loading: true})
+        try {
+            await CategoryService.delete(id)
+        } catch(error: any) {
+            set({error: error.response.data})
+        } finally {
+            set({loading: false})
+        }
+    },
+    deleteCategory: (id:number) => {
+        set((state) => {state.categories = state.categories?.filter(item  => item.id !== id)})
+    },
+    setStatus: () => set({status: null})
 })))

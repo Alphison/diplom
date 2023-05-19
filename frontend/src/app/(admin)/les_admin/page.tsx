@@ -68,32 +68,34 @@ const Courses = () => {
           </label>
         </form>
       </div>
-      <table className="table_users" cellSpacing="0">
-        <tbody>
-            <tr>
-                <th>id</th>
-                <th>Название</th>
-                <th>Превью</th>
-                <th>Действия</th>
-            </tr>
-            {
-               lessonsDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
-               lessonsDataSearch?.map((item) => {
-                const src = `${process.env.NEXT_PUBLIC_API}storage/${item.preview}` 
-                return (
-                  <tr>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td><div className="table-lesson-preview"><Image loader={() => src} src={src} alt={''} width={200} height={100}/></div></td>
-                      <td>
-                        <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><AiFillDelete /></button>
-                      </td>
-                  </tr>
-                )
-              })
-            }
-        </tbody>
-      </table>
+      <div className="table-scroll">
+        <table className="table_users" cellSpacing="0">
+          <tbody>
+              <tr>
+                  <th>id</th>
+                  <th>Название</th>
+                  <th>Превью</th>
+                  <th>Действия</th>
+              </tr>
+              {
+                lessonsDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
+                lessonsDataSearch?.map((item) => {
+                  const src = `${process.env.NEXT_PUBLIC_API}storage/${item.preview}` 
+                  return (
+                    <tr>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td><div className="table-lesson-preview"><Image loader={() => src} src={src} alt={''} width={200} height={100}/></div></td>
+                        <td>
+                          <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><AiFillDelete /></button>
+                        </td>
+                    </tr>
+                  )
+                })
+              }
+          </tbody>
+        </table>
+      </div>
     </motion.div>
   )
 }

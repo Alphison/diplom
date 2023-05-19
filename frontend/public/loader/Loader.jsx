@@ -4,7 +4,7 @@ import { ClipLoader } from "react-spinners";
 const Loader = () => {
   return (
     <ClipLoader
-      color="#ffffff"
+      color="#6DE787"
       speedMultiplier={0.7}
     />
   )

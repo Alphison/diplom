@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import Loader from "../../../public/loader/Loader";
 import { useCategory, useCourses } from "store/useCourses";
 import { motion } from "framer-motion";
+import { variantsCategory, variantsCourses } from "animation/animation";
+import { uselogin } from "store/useSign";
 
 const page = () => {
   const router = useRouter();
@@ -40,40 +42,20 @@ const page = () => {
 
   const countCourse = courses?.length;
 
-  const handleCategoryClick = (id: number) => {
+  const handleCategoryClick = (id:number) => {
     setCatId(id);
   };
   const handleAllCoursesClick = (id: number) => {
     setCatId(id);
   };
 
-  const variantsCourses = {
-    hidden: {
-      opacity: 0,
-      transform: "scale(0)",
-    },
-    visible: (i: number) => ({
-      opacity: 1,
-      transform: "scale(1)",
-      transition: {
-        delay: i * 0.3,
-      },
-    }),
-  };
-
-  const variantsCategory = {
-    hidden: {
-      opacity: 0,
-      y: -50,
-    },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.3,
-      },
-    }),
-  };
+  if(loading){
+    return (
+        <div className="loader-wrapper">
+            <Loader />
+        </div>
+    )
+  }
 
   return (
     <div className="courses" id="page-wrap">
@@ -86,11 +68,7 @@ const page = () => {
           >
             Все курсы
           </button>
-          {Loading ? (
-            <div className="wrapper-loader">
-              <Loader />
-            </div>
-          ) : (
+          {
             categories.map((cat, i) => {
               return (
                 <motion.button
@@ -100,12 +78,12 @@ const page = () => {
                   animate="visible"
                   custom={i}
                   className={catId === cat.id ? "cat-el active" : "cat-el"}
-                  onClick={() => handleCategoryClick(cat.id)}
+                  onClick={() => handleCategoryClick(cat.id!)}
                 >
                   {cat.name}
                 </motion.button>
               );
-            })
+            }
           )}
         </div>
         <motion.p
@@ -122,11 +100,7 @@ const page = () => {
         </motion.p>
       </div>
       <div className="courses__block">
-        {loading ? (
-          <div className="wrapper-loader">
-            <Loader />
-          </div>
-        ) : (
+        {
           usersData?.map((course, i) => {
             const src = `${process.env.NEXT_PUBLIC_API}storage/${course?.img_course}` 
             const cat = categories?.find(category => category.id === course.category_id)
@@ -169,7 +143,7 @@ const page = () => {
               </motion.div>
             );
           })
-        )}
+        }
       </div>
     </div>
   );

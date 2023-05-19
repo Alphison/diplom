@@ -26,4 +26,19 @@ export const CategoryService = {
             }
         })
     },
+    async addCat(data:CategoryType){
+        return axios.post<CategoryType>(`api/category`, data, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+    },
+    async delete(id:number){
+        return axios.post(`api/category/${id}`, {
+            _method: 'DELETE',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+    },
 }

@@ -25,6 +25,7 @@ class CourseResources extends JsonResource
             'img_course' => $this->img_course,
             'goal' => $this->goal,
             'price' => $this->price,
+            'active' => $this->active,
             'created_at' => $this->created_at,
         ];
     }

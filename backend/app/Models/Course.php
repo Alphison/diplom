@@ -18,7 +18,8 @@ class Course extends Model
         'user_id',
         'profession',
         'goal',
-        'img_course'
+        'img_course',
+        'active'
     ];
 
     public function lessons()

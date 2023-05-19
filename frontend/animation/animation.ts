@@ -76,3 +76,31 @@ export  const animErrors = {
         }
     }
 }
+
+export const variantsCourses = {
+  hidden: {
+    opacity: 0,
+    transform: "scale(0)",
+  },
+  visible: (i: number) => ({
+    opacity: 1,
+    transform: "scale(1)",
+    transition: {
+      delay: i * 0.3,
+    },
+  }),
+};
+
+export const variantsCategory = {
+  hidden: {
+    opacity: 0,
+    y: -50,
+  },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.3,
+    },
+  }),
+};

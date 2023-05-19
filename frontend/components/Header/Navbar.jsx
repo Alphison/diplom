@@ -10,14 +10,13 @@ import { RiLogoutBoxFill } from 'react-icons/ri';
 import { uselogin } from '../../store/useSign';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdAdminPanelSettings } from 'react-icons/md';
-import { motion, useTransform } from 'framer-motion';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import {redirect} from 'next/navigation'
+import Hamburger from 'hamburger-react';
 
 
 const Navbar = () => {
     const ctx = useContext(MyContext)
-    const router = useRouter()
 
     const { getToken, access_token, fetchUser, user, fetchLogout } = uselogin(state => ({
       getToken: state.getToken,
@@ -29,18 +28,23 @@ const Navbar = () => {
 
     useEffect(() => {
       getToken()
-      fetchUser(access_token)
+      if(access_token){
+        fetchUser(access_token)
+      }
     }, [access_token])
 
     const handleLogout = () => {
       fetchLogout()
-      router.push('/')
+      redirect('/sign')
     }
 
     const src = `${process.env.NEXT_PUBLIC_API}${user?.ava}`;
 
   return (
     <Menu left isOpen={ ctx.isMenuOpen } className="menu" pageWrapId={"page-wrap"} outerContainerId={'outer-container'} onStateChange={(state) => ctx.stateChangeHandler(state)}>
+        <div onClick={ctx.toggleMenu} className={"burger"}>
+          <Hamburger rounded toggled={ctx.isMenuOpen} size={30} direction="right" color="#ffffff"/>
+        </div>
         {
           access_token &&
           <div className='user-pole'>
@@ -75,7 +79,7 @@ const Navbar = () => {
         <Link href="/courses" className="menu-item"><IoIosSchool />Курсы</Link>
         <Link href="#" className="menu-item"><AiFillInfoCircle />О школе</Link>
         {
-          access_token ? <Link href="#" className="menu-item logout-item" onClick={() => handleLogout()}><RiLogoutBoxFill />Выйти</Link>
+          access_token ? <button className="menu-item logout-item" onClick={() => handleLogout()}><RiLogoutBoxFill />Выйти</button>
           : <Link href="/sign" className="menu-item"><GoSignIn />Войти</Link>
         }
     </Menu>

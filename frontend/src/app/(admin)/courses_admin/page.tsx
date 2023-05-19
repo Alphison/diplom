@@ -89,32 +89,34 @@ const Courses = () => {
           </label>
         </form>
       </div>
-      <table className="table_users" cellSpacing="0">
-        <tbody>
-            <tr>
-                <th>id</th>
-                <th>Название</th>
-                <th>Преподаватель</th>
-                <th>Действия</th>
-            </tr>
-            {
-               usersDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
-              usersDataSearch?.map((item) => {
-                return (
-                  <tr>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.user_id}</td>
-                      <td>
-                        <button className="ikon_delete-user2" onClick={() => handleSetEdit(item.id)}><AiFillEdit /></button>
-                        <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><AiFillDelete /></button>
-                      </td>
-                  </tr>
-                )
-              })
-            }
-        </tbody>
-      </table>
+      <div className="table-scroll">
+        <table className="table_users" cellSpacing="0">
+          <tbody>
+              <tr>
+                  <th>id</th>
+                  <th>Название</th>
+                  <th>Преподаватель</th>
+                  <th>Действия</th>
+              </tr>
+              {
+                usersDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
+                usersDataSearch?.map((item) => {
+                  return (
+                    <tr>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>{item.user_id}</td>
+                        <td>
+                          <button className="ikon_delete-user2" onClick={() => handleSetEdit(item.id)}><AiFillEdit /></button>
+                          <button className="ikon_delete-user" onClick={() => modalFunc(item.id)}><AiFillDelete /></button>
+                        </td>
+                    </tr>
+                  )
+                })
+              }
+          </tbody>
+        </table>
+      </div>
     </motion.div>
   )
 }

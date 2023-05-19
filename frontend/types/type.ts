@@ -9,14 +9,15 @@ export interface CourseType{
     img_course?: string;
     goal: string;
     price: number;
+    active: string;
     created_at?: Date;
 }
 
 export interface CategoryType{
-    id: number;
+    id?: number;
     name: string;
-    created_at: Date;
-    courses: CourseType[];
+    created_at?: Date;
+    courses?: CourseType[];
 }
 
 type VideosType = {

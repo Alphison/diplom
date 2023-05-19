@@ -1,12 +1,12 @@
 "use client"
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import "../../globals.css"
 import Image from "next/image";
 import { useCourse } from "store/useCourse";
 import {useEffect} from "react"
 import { useUsers } from "store/useUser";
-import { useLesson } from "store/useLessons";
+import { useLessons } from "store/useLessons";
 import { uselogin } from "store/useSign";
 import { useCourseUser } from "store/useCourseUser";
 import Swal from "sweetalert2";
@@ -23,15 +23,13 @@ const Course: FC = ({params}:any) => {
         fetchCourse: state.fetchCourse
     }))
 
-    const {access_token, getToken, fetchUser, user, fetchUpdateRole} = uselogin(state => ({
-        access_token: state.access_token,
-        getToken: state.getToken,
-        fetchUser: state.fetchUser,
+    const {access_token, user, fetchUpdateRole} = uselogin(state => ({
         user: state.user,
-        fetchUpdateRole: state.fetchUpdateRole
+        fetchUpdateRole: state.fetchUpdateRole,
+        access_token: state.access_token
     }))
 
-    const {lessons, fetchLessons} = useLesson(state => ({
+    const {lessons, fetchLessons} = useLessons(state => ({
         lessons: state.lessons,
         fetchLessons: state.fetchLessons,
     }))
@@ -58,9 +56,7 @@ const Course: FC = ({params}:any) => {
         fetchCourse(params.id)
         fetchUsers()
         fetchLessons()
-        getToken()
         fetchCourseUser()
-        fetchUser(access_token)
     }, [])
 
     const prepod = users.find(item => item.id === course?.data.user_id)
@@ -116,17 +112,22 @@ const Course: FC = ({params}:any) => {
             }
         }
     }
+    
+    const style = {
+        background: `url(${src})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+    }
 
     if(loading){
-        return <Loader />
-    }else{
+        return (<div className="loader-wrapper">
+            <Loader />
+        </div>)
+    }
         return (
             <div className="courseWrapper" id="page-wrap">
-                <div className="home-cours">
+                <div className="home-cours" style={style}>
                     <div className="shadow-inner"></div>
-                    <div className="img-home-course">
-                        <Image width={1920} height={746} loader={() => src} src={src} alt="" />
-                    </div>
                     <div className="content_home-cours">
                         <h1 className="h1_home-cours">
                             {course?.data.name}
@@ -212,7 +213,6 @@ const Course: FC = ({params}:any) => {
                             <div className="text-column__plan">
                                 {lessons_course.length} обучающих<br/>
                                 уроков<br/>
-                                + домашка
                             </div>
                         </div>
                         <hr className="hr-plan"/>
@@ -229,6 +229,5 @@ const Course: FC = ({params}:any) => {
             </div>
         )   
     }
-}
 
 export default Course

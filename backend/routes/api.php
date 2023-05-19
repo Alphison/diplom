@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\CourseUpdateActiveController;
 use App\Http\Controllers\Api\LessonController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UpdateAvatarController;
@@ -36,6 +37,8 @@ Route::apiResources([
     'course_user' => CourseUser::class,
     'lesson_user' => LessonUserController::class,
 ]);
+
+Route::post('/course_update', [CourseUpdateActiveController::class, 'course_update']);
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('/register', [AuthController::class, 'register']);
