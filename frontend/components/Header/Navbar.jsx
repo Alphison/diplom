@@ -31,6 +31,7 @@ const Navbar = () => {
       if(access_token){
         fetchUser(access_token)
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [access_token])
 
     const handleLogout = () => {

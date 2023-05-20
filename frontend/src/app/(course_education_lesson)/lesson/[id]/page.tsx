@@ -61,6 +61,7 @@ const Lesson = ({params}:any) => {
   useEffect(() => {
     fetchLessonUser()
     fetchLesson(params.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const src = `${process.env.NEXT_PUBLIC_API}storage/${lesson?.data.preview}`
@@ -146,7 +147,7 @@ const token = JSON.parse(sessionStorage.getItem('access_token')!)
               {lesson?.data.images?.map(image => {
                   const src2 = `${process.env.NEXT_PUBLIC_API}storage/${image.img}`
                   return (
-                    <SwiperSlide onClick={() => handleImage(src2)}>
+                    <SwiperSlide key={image.id} onClick={() => handleImage(src2)}>
                         <Image width={260} height={150} loader={() => src2} src={src2} alt="" />
                     </SwiperSlide>
                   )
@@ -162,7 +163,7 @@ const token = JSON.parse(sessionStorage.getItem('access_token')!)
                 // const video = state.filter((item2:any) => item2.id === item.id);
                 // console.log(video)
                 return(
-                  <div className="video-block">
+                  <div className="video-block" key={i}>
                     <h1 className="id-video">
                     {i + 1}
                     </h1>

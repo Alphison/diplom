@@ -2,7 +2,6 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import '../../globals.css'
 import { motion } from "framer-motion";
 import { animStat } from "animation/animation";
 import { UsersType, useUsers } from "store/useUser";
@@ -10,7 +9,7 @@ import Loader from "public/loader/Loader";
 import { TiUserDelete } from "react-icons/ti" 
 import Swal from "sweetalert2";
 
-const Users:FC<UsersType> = () => {
+const Users = () => {
   const [cat, setCat] = useState<string>('')
   const [search, setSearch] = useState<string>('')
 
@@ -31,6 +30,7 @@ const Users:FC<UsersType> = () => {
   
   useEffect(() => {
     fetchUsers()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 

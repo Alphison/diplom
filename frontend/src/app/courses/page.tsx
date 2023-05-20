@@ -7,9 +7,8 @@ import Loader from "../../../public/loader/Loader";
 import { useCategory, useCourses } from "store/useCourses";
 import { motion } from "framer-motion";
 import { variantsCategory, variantsCourses } from "animation/animation";
-import { uselogin } from "store/useSign";
 
-const page = () => {
+const Courses = () => {
   const router = useRouter();
 
   const { loading, error, fetchCourses, courses } = useCourses((state) => ({
@@ -38,6 +37,7 @@ const page = () => {
   useEffect(() => {
     fetchCourses();
     fetchCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const countCourse = courses?.length;
@@ -87,6 +87,7 @@ const page = () => {
           )}
         </div>
         <motion.p
+          key={1}
           initial={{ x: 100 }}
           animate={{ x: 0 }}
           transition={{
@@ -149,4 +150,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Courses;

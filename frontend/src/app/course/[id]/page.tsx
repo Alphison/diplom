@@ -57,6 +57,7 @@ const Course: FC = ({params}:any) => {
         fetchUsers()
         fetchLessons()
         fetchCourseUser()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const prepod = users.find(item => item.id === course?.data.user_id)

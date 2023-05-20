@@ -27,7 +27,9 @@ const Category_admin = () => {
 
     useEffect(() => {
         fetchCategory()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     const [cat, setCat] = useState<CategoryType>({name: ''})
 
     const handleInput = (e:any) => {
@@ -68,6 +70,7 @@ const Category_admin = () => {
     useEffect(() => {
         message()
         setStatus()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status])
 
     const modalFunc = async (id:any) => {
@@ -101,7 +104,7 @@ const Category_admin = () => {
             {
                 categories.map(cat => {
                     return (
-                        <div className="category-block">
+                        <div key={cat.id} className="category-block">
                             <p className="name-cat__categories-wrapper">{cat.name}</p>
                             <button className="ikon_delete-user" onClick={() => modalFunc(cat.id)}><AiFillDelete /></button>
                         </div>

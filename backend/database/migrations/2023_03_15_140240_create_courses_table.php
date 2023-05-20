@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('img_course');
             $table->string('goal');
             $table->bigInteger('price')->unsigned();
+            $table->enum('active', ['true', 'false'])->default('false');
             $table->timestamps();
         });
     }

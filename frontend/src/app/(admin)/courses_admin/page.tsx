@@ -33,6 +33,7 @@ const Courses = () => {
     useEffect(() =>{
       fetchCourses()
       fetchCategory()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const modalFunc = async (id:any) => {
@@ -75,7 +76,7 @@ const Courses = () => {
             <option value="0">Все</option>
             {
                 categories?.map((item) => {
-                    return <option value={item.id}>{item.name}</option>
+                    return <option key={item.id} value={item.id}>{item.name}</option>
                 })
             }
           </select>
@@ -102,7 +103,7 @@ const Courses = () => {
                 usersDataSearch?.length === 0 ? <tr><td><p className="message-null">По вашему запросу никого не найдено...</p></td></tr> :
                 usersDataSearch?.map((item) => {
                   return (
-                    <tr>
+                    <tr key={item.id}>
                         <td>{item.id}</td>
                         <td>{item.name}</td>
                         <td>{item.user_id}</td>

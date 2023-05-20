@@ -67,6 +67,7 @@ const Layout = ({children}: {children: React.ReactNode}) => {
   useEffect(() => {
     fetchUsers()
     fetchCourses()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const token = JSON.parse(sessionStorage.getItem('access_token')!)

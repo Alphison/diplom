@@ -28,8 +28,6 @@ const Auth = () => {
     setStatus: state.setStatus
 }))
 
-console.log(status)
-
 const handleSubmitLogin: SubmitHandler<Inputs> = ({password, email}) => {
   fetchLogin({password, email});
 }
@@ -51,6 +49,7 @@ const message = () => {
 useEffect(() => {
   message()
   setStatus()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [status])
 
   const [activeEyePassword, setActiveEyePassword] = useState(true)

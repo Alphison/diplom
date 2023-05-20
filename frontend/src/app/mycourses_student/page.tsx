@@ -48,6 +48,7 @@ const Mycourses_student = () => {
         fetchLessons()
         fetchCategory()
         fetchLessonUser()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const course_user2 = course_user?.filter(item => item.user_id === user?.id)
@@ -136,8 +137,10 @@ const Mycourses_student = () => {
 
                 const ls_unsuccess = ls.filter(ls2 => ls2 === undefined)
 
+                // const count_lesson = useLessonCount(lessons_course.length)
+
                 return (
-                    <div className="block__mycourses">
+                    <div key={i} className="block__mycourses">
                         <div className="col__mycourses">
                             <p className="subname-mycourses">
                                 {cat?.name}
@@ -147,7 +150,7 @@ const Mycourses_student = () => {
                             </h1>
                             <div className="row__mycourses">
                                 <p className="count__lessons">
-                                    {useLessonCount(lessons_course.length)}
+                                    {lessons_course.length} уроков
                                 </p>
                                 {
                                     precentSuccessLesson === 100 ?

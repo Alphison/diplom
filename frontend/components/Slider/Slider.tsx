@@ -1,10 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import Image from "next/image";
-import Link from "next/link";
 import Model from "components/model/model";
-import { MyContext } from "components/Header/MyProvider";
 
 const slides = [
   {
@@ -38,7 +35,6 @@ function App() {
   const [disabledNext, setDisabledNext] = useState(false);
   const [disabledPrev, setDisabledPrev] = useState(false);
   const [active, setActive] = useState(0);
-  const x = useMotionValue(allSlide);
 
   const handleClickNext = () => {
     const setAllSlideTime = () => {
@@ -103,8 +99,6 @@ function App() {
     }
   }, [allSlide]);
 
-  const ctx = useContext(MyContext)
-
   return (
     <div className="App" id="page-wrap">
       <div className="window">
@@ -119,7 +113,7 @@ function App() {
             return (
               <div key={i} className={active === i ? "slide active" : "slide"}>
                 <div style={{  background: 'black', opacity: '0.4', width: '100%', height: '100%', position: 'absolute'}}></div>
-                <img src={item.img} />
+                <Image src={item.img} width={1920} height={1080} alt=""/>
                 <div className="content-slide">
                   <div className="col-content-slide">
                       <h2 className="subname-slide">
@@ -132,14 +126,14 @@ function App() {
                             <p className="text-block-info">{item.text}</p>
                           </div>
                           <div className={i === 0 ? "block-gif" : "block-gif2"}>
-                            <img src={item.gif} alt="" />
+                            <Image src={item.gif} width={331} height={183} alt="" />
                           </div>
                         </div>
                         {
                           i === 0 ? (
                             <div className="col-info-slide">
                               <div className="block-gif">
-                                <img src={item.gif2} alt="" />
+                                <Image width={299} height={183} src={item.gif2} alt="" />
                               </div>
                               <div className="block-info">
                                 <p className="text-block-info">{item.text2}</p>

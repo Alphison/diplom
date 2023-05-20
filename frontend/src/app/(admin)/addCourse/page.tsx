@@ -18,7 +18,7 @@ const AddCours = () => {
     const {categories, fetchCategory} = useCategory(state => ({categories: state.categories, fetchCategory: state.fetchCategory}))
     const {users, fetchUsers} = useUsers(state => ({users: state.users, fetchUsers: state.fetchUsers}))
     const {fetchAddCourse, error, status, loading, setStatus} = useCourses(state => ({fetchAddCourse: state.fetchAddCourse, error: state.error, status: state.status, loading: state.loading, setStatus: state.setStatus}))
-    const [course, setCourse] = useState<CourseType>({name: '', description: '', duration: '', user_id: 0, category_id: 0, profession: '', goal: '', price:0})
+    const [course, setCourse] = useState<CourseType>({name: '', description: '', duration: '', user_id: 0, category_id: 0, profession: '', goal: '', price:0, active: 'false'})
     const [foto, setFoto] = useState()
 
     const handleInput = (e:any) => {
@@ -36,6 +36,7 @@ const AddCours = () => {
     useEffect(() => {
         fetchCategory()
         fetchUsers()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [image, setImage] = useState('/images/null.png')
@@ -78,6 +79,7 @@ const AddCours = () => {
     useEffect(() => {
         message()
         setStatus()
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status])
 
     const formSchema = Yup.object().shape({
@@ -121,7 +123,7 @@ const AddCours = () => {
                 error ?
                 error?.map((item:any, i:number) => {
                     return (
-                        <p className="error">{item}</p>
+                        <p key={i} className="error">{item}</p>
                     )
                 })
                 : null
@@ -146,7 +148,7 @@ const AddCours = () => {
                 {
                     categories.map(category => {
                         return (
-                            <option value={category.id}>{category.name}</option>
+                            <option key={category.id} value={category.id}>{category.name}</option>
                         )
                     })
                 }
@@ -160,7 +162,7 @@ const AddCours = () => {
                     users.map(prepod => {
                         if(prepod.role === 'Преподаватель'){
                             return (
-                                <option value={prepod.id}>{prepod.name}</option>
+                                <option key={prepod.id} value={prepod.id}>{prepod.name}</option>
                             )
                         }
                     })

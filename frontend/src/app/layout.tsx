@@ -1,10 +1,9 @@
 "use client"
 
 import './globals.css'
-import React, { useContext } from 'react'
+import React from 'react'
 import LayoutHeaderFooter from './LayoutHeaderFooter';
 import { usePathname } from 'next/navigation';
-import { MyContext } from 'components/Header/MyProvider';
 
 export default function RootLayout ({children}: {
   children: React.ReactNode

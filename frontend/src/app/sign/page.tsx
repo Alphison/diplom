@@ -26,6 +26,7 @@ const Sign = () => {
               {buttons.map((name) => {
                 return (
                   <button
+                    key={name}
                     className={active === name ? 'btn-header__auth active' : 'btn-header__auth'}
                     onClick={() => handleSetActive(name)}
                   >

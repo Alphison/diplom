@@ -176,7 +176,7 @@ body::-webkit-scrollbar-thumb {
   }
   .slide.active{
     z-index: 2;
-    animation: anim 0.3s ease 1 alternate 2s forwards ;
+    animation: anim 0.3s ease 1 alternate 2s forwards;
   }
   @keyframes anim {
     0%{

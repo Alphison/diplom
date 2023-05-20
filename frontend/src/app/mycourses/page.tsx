@@ -36,6 +36,7 @@ const Mycourses = () => {
         fetchLessons()
         fetchCourseUser()
         fetchUsers()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const { user } = uselogin(state => ({
@@ -97,7 +98,7 @@ const Mycourses = () => {
                 const lessons_course = lessons.filter(lesson => lesson.course_id === item.id)
                 const course_user2 = course_user?.filter(item2 => item2.course_id === item.id)
                 return (
-                    <div className="block__courses-prepod">
+                    <div className="block__courses-prepod" key={item.id}>
                         <div className="block__course-prepod__inner">
                             <div className="column__courses-prepod">
                                 <div className="row__column-courses-prepod">
@@ -124,7 +125,7 @@ const Mycourses = () => {
                                             course_user2?.map(item4 => {
                                                 const course_users = users?.find(user => user.id === item4?.user_id)
                                                 return (
-                                                    <tr>
+                                                    <tr key={item4.user_id}>
                                                         <td className="th-first">{course_users?.id}</td>
                                                         <td>{course_users?.surname} {course_users?.name} {course_users?.patronymic}</td>
                                                         <td>{course_users?.email}</td>
@@ -146,7 +147,7 @@ const Mycourses = () => {
                                     <tr><th className="th-first">id</th><th>Название</th><th>Действия</th></tr>
                                         {lessons_course.map((lesson) => {
                                             return (
-                                                <tr>
+                                                <tr key={lesson.id}>
                                                     <td className="th-first">{lesson.id}</td>
                                                     <td>{lesson.name}</td>
                                                     <td>

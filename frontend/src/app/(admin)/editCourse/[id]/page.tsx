@@ -47,6 +47,7 @@ const EditCourse:FC = ({params}:any) => {
         fetchCategory()
         fetchUsers()
         fetchCourse(params.id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const onImageChange = (event:any) => {
@@ -99,6 +100,7 @@ const EditCourse:FC = ({params}:any) => {
     useEffect(() => {
         message()
         setStatus()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status])
 
     const formSchema = Yup.object().shape({
@@ -144,7 +146,7 @@ const EditCourse:FC = ({params}:any) => {
                 error ?
                 error?.map((item:any, i:number) => {
                     return (
-                        <p className="error">{item}</p>
+                        <p className="error" key={i}>{item}</p>
                     )
                 })
                 : null
@@ -169,7 +171,7 @@ const EditCourse:FC = ({params}:any) => {
                 {
                     categories.map(category => {
                         return (
-                            <option value={category.id}>{category.name}</option>
+                            <option key={category.id} value={category.id}>{category.name}</option>
                         )
                     })
                 }
@@ -183,7 +185,7 @@ const EditCourse:FC = ({params}:any) => {
                     users.map(prepod => {
                         if(prepod.role === 'Преподаватель'){
                             return (
-                                <option value={prepod.id}>{prepod.name}</option>
+                                <option key={prepod.id} value={prepod.id}>{prepod.name}</option>
                             )
                         }
                     })

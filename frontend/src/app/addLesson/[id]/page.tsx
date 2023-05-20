@@ -17,7 +17,7 @@ import { animH1 } from 'animation/animation'
 import { redirect } from 'next/navigation'
 import { uselogin } from 'store/useSign'
 
-const addLesson:FC = ({params}:any) => {
+const AddLesson:FC = ({params}:any) => {
     const { user } = uselogin(state => ({
         user: state.user
     }))
@@ -125,6 +125,7 @@ const addLesson:FC = ({params}:any) => {
     useEffect(() => {
         message()
         setStatus()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status])
 
     const formSchema = Yup.object().shape({
@@ -158,7 +159,7 @@ const addLesson:FC = ({params}:any) => {
                     error ?
                     error.preview?.map((item:any, i:number) => {
                         return (
-                            <p className="error">{item}</p>
+                            <p key={i} className="error">{item}</p>
                         )
                     })
                     : null
@@ -170,9 +171,9 @@ const addLesson:FC = ({params}:any) => {
                 </h3>
                 <div className='images__block-lesson_add'>
                     {
-                        images.map(image => {
+                        images.map((image, i) => {
                             return (
-                                <motion.div variants={animH1} animate={'visible'} initial={'hidden'} className="img-block-add-lesson">
+                                <motion.div key={i} variants={animH1} animate={'visible'} initial={'hidden'} className="img-block-add-lesson">
                                     <Image src={image} width={350} height={200} alt=''/>
                                 </motion.div>
                             )
@@ -234,4 +235,4 @@ const addLesson:FC = ({params}:any) => {
   )
 }
 
-export default addLesson
+export default AddLesson

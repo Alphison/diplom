@@ -78,6 +78,7 @@ const CourseEducation = ({params}:any) => {
     if(precentSuccessLesson === 100 && course?.data.active === 'false'){
       fetchCourseUpdateActive({id: course.data.id, active: 'true'})
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const src = `${process.env.NEXT_PUBLIC_API}storage/${course?.data.img_course}`

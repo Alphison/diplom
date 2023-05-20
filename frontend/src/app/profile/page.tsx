@@ -14,7 +14,7 @@ import Loader from 'public/loader/Loader'
 import { useRouter } from 'next/navigation'
 import { redirect } from 'next/navigation';
 
-const page = () => {
+const Profile = () => {
     const [profile, setProfile] = useState(true)
     const [image, setImage] = useState('/images/null.png')
     const [ava, setAva] = useState('')
@@ -86,7 +86,7 @@ const page = () => {
                     error ?
                     error?.ava?.map((item:any, i:number) => {
                         return (
-                            <motion.p variants={animAva} initial={'hidden'} animate={'visible'} custom={i} className="error">{item}</motion.p>
+                            <motion.p key={i} variants={animAva} initial={'hidden'} animate={'visible'} custom={i} className="error">{item}</motion.p>
                         )
                     })
                     : null
@@ -115,4 +115,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Profile

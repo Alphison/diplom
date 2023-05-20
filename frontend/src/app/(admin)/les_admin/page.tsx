@@ -26,6 +26,7 @@ const Courses = () => {
 
     useEffect(() =>{
         fetchLessons()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const modalFunc = async (id:any) => {
@@ -82,7 +83,7 @@ const Courses = () => {
                 lessonsDataSearch?.map((item) => {
                   const src = `${process.env.NEXT_PUBLIC_API}storage/${item.preview}` 
                   return (
-                    <tr>
+                    <tr key={item.id}>
                         <td>{item.id}</td>
                         <td>{item.name}</td>
                         <td><div className="table-lesson-preview"><Image loader={() => src} src={src} alt={''} width={200} height={100}/></div></td>
