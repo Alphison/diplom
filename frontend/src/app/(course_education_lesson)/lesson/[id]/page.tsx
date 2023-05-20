@@ -94,10 +94,12 @@ const handleImage = (src2:string) => {
   setImage(src2)
 }
 
-const token = JSON.parse(sessionStorage.getItem('access_token')!)
+useEffect(() => {
+  const token = JSON.parse(sessionStorage.getItem('access_token')!)
   if(!token){
-    redirect('/sign')
+      redirect('/sign')
   }
+}, [])
 
   if(user){
     if(user?.role !== 'Ученик'){

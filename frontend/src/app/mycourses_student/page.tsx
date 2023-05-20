@@ -48,6 +48,10 @@ const Mycourses_student = () => {
         fetchLessons()
         fetchCategory()
         fetchLessonUser()
+        const token = JSON.parse(sessionStorage.getItem('access_token')!)
+        if(!token){
+            redirect('/sign')
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -61,11 +65,6 @@ const Mycourses_student = () => {
 
     if(!course_user2){
         return <h2>Вы пока не записаны на курсы...</h2>
-    }
-
-    const token = JSON.parse(sessionStorage.getItem('access_token')!)
-    if(!token){
-        redirect('/sign')
     }
 
     if(user){

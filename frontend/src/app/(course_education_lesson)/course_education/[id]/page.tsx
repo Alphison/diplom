@@ -83,10 +83,12 @@ const CourseEducation = ({params}:any) => {
 
   const src = `${process.env.NEXT_PUBLIC_API}storage/${course?.data.img_course}`
 
-  const token = JSON.parse(sessionStorage.getItem('access_token')!)
+  useEffect(() => {
+    const token = JSON.parse(sessionStorage.getItem('access_token')!)
     if(!token){
-      redirect('/sign')
+        redirect('/sign')
     }
+}, [])
 
     if(user){
       if(user?.role !== 'Ученик'){

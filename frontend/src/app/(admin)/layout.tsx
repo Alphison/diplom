@@ -70,10 +70,12 @@ const Layout = ({children}: {children: React.ReactNode}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const token = JSON.parse(sessionStorage.getItem('access_token')!)
-  if(!token){
-    redirect('/sign')
-  }
+  useEffect(() => {
+    const token = JSON.parse(sessionStorage.getItem('access_token')!)
+    if(!token){
+        redirect('/sign')
+    }
+}, [])
 
   if(user){
     if(user?.role !== 'Админ'){

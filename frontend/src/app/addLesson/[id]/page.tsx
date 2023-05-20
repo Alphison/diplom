@@ -22,10 +22,12 @@ const AddLesson:FC = ({params}:any) => {
         user: state.user
     }))
 
-    const token = JSON.parse(sessionStorage.getItem('access_token')!)
-    if(!token){
-      redirect('/sign')
-    }
+    useEffect(() => {
+        const token = JSON.parse(sessionStorage.getItem('access_token')!)
+        if(!token){
+            redirect('/sign')
+        }
+    }, [])
 
     if(user){
         if(user?.role !== 'Преподаватель'){

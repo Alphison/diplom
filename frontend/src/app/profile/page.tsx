@@ -7,11 +7,9 @@ import { FiDownload } from 'react-icons/fi'
 import InfoProfile from '../../../components/InfoProfile/InfoProfile'
 import EditProfile from 'components/EditProfile/EditProfile'
 import {motion} from 'framer-motion'
-import { SubmitHandler } from 'react-hook-form/dist/types'
 import { uselogin } from 'store/useSign'
 import Image from 'next/image'
 import Loader from 'public/loader/Loader'
-import { useRouter } from 'next/navigation'
 import { redirect } from 'next/navigation';
 
 const Profile = () => {
@@ -63,10 +61,12 @@ const Profile = () => {
 
     const src = `${process.env.NEXT_PUBLIC_API}${user?.ava}`;
 
-    const token = JSON.parse(sessionStorage.getItem('access_token')!)
-    if(!token){
-        redirect('/sign')
-    }
+    useEffect(() => {
+        const token = JSON.parse(sessionStorage.getItem('access_token')!)
+        if(!token){
+            redirect('/sign')
+        }
+    }, [])
 
   return (
     <div className='profile-wrapper' id='page-wrap'>
