@@ -1,13 +1,17 @@
 "use client"
 
 import './globals.css'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LayoutHeaderFooter from './LayoutHeaderFooter';
 import { usePathname } from 'next/navigation';
 
 export default function RootLayout ({children}: {
   children: React.ReactNode
 }) {
+
+  useEffect(() => {
+    localStorage.setItem('swal-initiation', 'ZZZZZZZZZZZZZZZZ')
+  }, [])
   
   const pathname = usePathname()
   

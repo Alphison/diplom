@@ -13,17 +13,27 @@ import { useForm } from 'react-hook-form'
 import { CourseType } from 'types/type'
 import Swal from 'sweetalert2'
 import Loader from 'public/loader/Loader'
+import { SubmitHandler } from "react-hook-form/dist/types";
+
+type Inputs = {
+    name: string,
+    description: string,
+    duration: string,
+    profession: string,
+    goal: string,
+    price: number,
+  };
 
 const AddCours = () => {
     const {categories, fetchCategory} = useCategory(state => ({categories: state.categories, fetchCategory: state.fetchCategory}))
     const {users, fetchUsers} = useUsers(state => ({users: state.users, fetchUsers: state.fetchUsers}))
     const {fetchAddCourse, error, status, loading, setStatus} = useCourses(state => ({fetchAddCourse: state.fetchAddCourse, error: state.error, status: state.status, loading: state.loading, setStatus: state.setStatus}))
-    const [course, setCourse] = useState<CourseType>({name: '', description: '', duration: '', user_id: 0, category_id: 0, profession: '', goal: '', price:0, active: 'false'})
+    const [course, setCourse] = useState({ user_id: 0, category_id: 0})
     const [foto, setFoto] = useState()
 
-    const handleInput = (e:any) => {
-        setCourse({...course, [e.target.name]: e.target.value})
-    }
+    // const handleInput = (e:any) => {
+    //     setCourse({...course, [e.target.name]: e.target.value})
+    // }
 
     const onChangeSelectForm = (e:any) => {
         setCourse((prevState:any) => {
@@ -47,17 +57,16 @@ const AddCours = () => {
         }
     }
 
-    const submit = (e:any) => {
-        e.preventDefault()
+    const Submit: SubmitHandler<Inputs> = ({name, description, duration, profession, goal, price}) => {
         const data = new FormData() as any
-        data.append('name', course.name)
-        data.append('description', course.description)
-        data.append('duration', course.duration)
+        data.append('name', name)
+        data.append('description', description)
+        data.append('duration', duration)
         data.append('user_id', course.user_id)
         data.append('category_id', course.category_id)
-        data.append('profession', course.profession)
-        data.append('goal', course.goal)
-        data.append('price', course.price)
+        data.append('profession', profession)
+        data.append('goal', goal)
+        data.append('price', price)
         data.append('img_course', foto)
         fetchAddCourse(data)
     }
@@ -65,6 +74,8 @@ const AddCours = () => {
     const message = () => {
         if(status == 201){
             reset()
+            setFoto(undefined)
+            setImage('/images/null.png')
             return Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -101,13 +112,13 @@ const AddCours = () => {
           .required('Введите цену'),
       })
     
-      const { register, handleSubmit, formState:{errors, isValid}, reset } = useForm<CourseType>({
-        mode: 'onBlur',
+      const { register, handleSubmit, formState:{errors}, reset } = useForm<CourseType>({
+        mode: 'onSubmit',
         resolver: yupResolver(formSchema)
       });
 
   return (
-    <motion.form className='add-course__wrapper' onSubmit={(e) => submit(e)} variants={animStat} initial={'hidden'} animate={'visible'}>
+    <motion.form className='add-course__wrapper' onSubmit={handleSubmit(Submit)} variants={animStat} initial={'hidden'} animate={'visible'}>
         <h3 className="name-image-input">
             Изображение курса:
         </h3>
@@ -131,15 +142,15 @@ const AddCours = () => {
         </label>
         
         <label htmlFor="" className='label-add-course'>
-            <input {...register('name')} type="text" placeholder='Название курса' className='inp-text-add' onChange={(e) => handleInput(e)}/>
+            <input {...register('name')} type="text" placeholder='Название курса' className='inp-text-add'/>
             {errors?.name && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.name.message}</motion.p>}
         </label>
         <label htmlFor="" className='label-add-course'>
-            <input {...register('duration')} type="text" placeholder='Продолжительность курса' className='inp-text-add' onChange={(e) => handleInput(e)}/>
+            <input {...register('duration')} type="text" placeholder='Продолжительность курса' className='inp-text-add'/>
             {errors?.duration && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.duration.message}</motion.p>}
         </label>
         <label htmlFor="" className='label-add-course'>
-            <input {...register('price')} type="number" placeholder='Цена' className='inp-text-add' min={0} onChange={(e) => handleInput(e)}/>
+            <input {...register('price')} type="number" placeholder='Цена' className='inp-text-add' min={0}/>
             {errors?.price && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.price.message}</motion.p>}
         </label>
         <label htmlFor="" className='label-add-course'>
@@ -171,18 +182,18 @@ const AddCours = () => {
             {errors?.user_id && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.user_id.message}</motion.p>}
         </label>
         <label htmlFor="" className='label-add-course'>
-            <textarea {...register('description')} id="" placeholder='Описание курса' onChange={(e) => handleInput(e)}></textarea>
+            <textarea {...register('description')} id="" placeholder='Описание курса'></textarea>
             {errors?.description && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.description.message}</motion.p>}
         </label>
         <label htmlFor="" className='label-add-course'>
-            <textarea {...register('profession')} id="" placeholder='О профессии' onChange={(e) => handleInput(e)}></textarea>
+            <textarea {...register('profession')} id="" placeholder='О профессии'></textarea>
             {errors?.profession && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.profession.message}</motion.p>}
         </label>
         <label htmlFor="" className='label-add-course'>
-            <textarea {...register('goal')} id="" placeholder='Цель курса' onChange={(e) => handleInput(e)}></textarea>
+            <textarea {...register('goal')} id="" placeholder='Цель курса'></textarea>
             {errors?.goal && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.goal.message}</motion.p>}
         </label>
-        <button className='btn-add-course' disabled={!isValid} onClick={(e) => submit(e)}>{loading ? <Loader /> : 'Добавить'}</button>
+        <button className='btn-add-course'>{loading ? <Loader /> : 'Добавить'}</button>
     </motion.form>
   )
 }

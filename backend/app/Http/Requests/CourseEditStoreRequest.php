@@ -25,14 +25,14 @@ class CourseEditStoreRequest extends FormRequest
     {
         return [
             'name' =>'required|max:255',
-            'description' =>'required|max:255',
+            'description' =>'required',
             'price' =>'required|numeric|min:0',
             'duration' => 'required',
             'category_id' => 'required',
             'user_id' =>'required',
             'profession' => 'required',
             'goal' => 'required',
-            'img_course' => 'nullable|image|mimes:jpeg,png,jpg|max:5120'
+            'img_course' => 'nullable|image|mimes:jpeg,png,jpg'
         ];
     }
 
@@ -41,7 +41,6 @@ class CourseEditStoreRequest extends FormRequest
         return [
             'img_course.image' => 'Файл должен быть изображением',
             'img_course.mimes' => 'Изображение может быть формата jpeg, png, jpg',
-            'img_course.max' => 'Максимальный размер 5 мб',
         ];
     }
 }

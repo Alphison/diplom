@@ -44,7 +44,8 @@ const Courses = () => {
         showCancelButton: true,
         confirmButtonColor: '#5840EA',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Да, удалить!'
+        confirmButtonText: 'Да, удалить!',
+        cancelButtonText: 'Отмена'
       }).then((result) => {
         if (result.isConfirmed) {
           fetchCourseDelete(id)

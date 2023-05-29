@@ -101,13 +101,15 @@ const CourseEducation = ({params}:any) => {
       background: `url(${src}) 0% 0% / cover no-repeat`,
   }
 
+  const src2 = `${process.env.NEXT_PUBLIC_API}storage/${course?.data.img_course}`
+
   return (
     <div className='course-education' id='page-wrap'>
         <div className={activeMenu ? "menu__course-education active" : "menu__course-education"}>
             <button className="menu-btn-setActive-courseEducation" onClick={() => setActiveMenu(!activeMenu)}><HiArrowLeft className={activeMenu ? "svg-arrow active" : "svg-arrow"}/></button>
             <motion.div variants={animStat} animate="visible" initial="hidden" custom={1} className="sub-block__course-education">
                 <div className="img-block__sub-block">
-                    <Image src={'/images/foto_course.jpg'} width={100} height={100} alt=''/>
+                    <Image loader={() => src} src={src2} width={100} height={100} alt=''/>
                 </div>
                 <div className="subinfo__course-education">
                     <h3 className="subname__course-education">

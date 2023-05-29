@@ -141,7 +141,7 @@ const Layout = ({children}: {children: React.ReactNode}) => {
                 </p>
               </div>
               <div className="col__stat-site">
-                <Image src="/images/prepod_svg.svg" alt="" width={85} height={85}/>
+                <Image src="/images/prepod_svg.png" alt="" width={85} height={85}/>
               </div>
             </motion.div>
           </div>

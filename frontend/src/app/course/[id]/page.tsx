@@ -12,6 +12,7 @@ import { useCourseUser } from "store/useCourseUser";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Loader from 'public/loader/Loader'
+import { useCategory } from "store/useCourses";
 
 const Course: FC = ({params}:any) => {
     const router = useRouter()
@@ -22,6 +23,8 @@ const Course: FC = ({params}:any) => {
         error: state.error,
         fetchCourse: state.fetchCourse
     }))
+
+    const {categories, fetchCategory} = useCategory(state => ({categories: state.categories, fetchCategory: state.fetchCategory}))
 
     const {access_token, user, fetchUpdateRole} = uselogin(state => ({
         user: state.user,
@@ -57,6 +60,7 @@ const Course: FC = ({params}:any) => {
         fetchUsers()
         fetchLessons()
         fetchCourseUser()
+        fetchCategory()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -93,7 +97,8 @@ const Course: FC = ({params}:any) => {
                 showCancelButton: true,
                 confirmButtonColor: '#5840EA',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Войти'
+                confirmButtonText: 'Войти',
+                cancelButtonText: 'Отмена'
               }).then((result) => {
                 if (result.isConfirmed) {
                     router.push('/sign')
@@ -120,6 +125,8 @@ const Course: FC = ({params}:any) => {
         backgroundSize: 'cover',
     }
 
+    const cat = categories.find(item => item.id === course?.data.category_id)
+
     if(loading){
         return (<div className="loader-wrapper">
             <Loader />
@@ -143,7 +150,7 @@ const Course: FC = ({params}:any) => {
                                         <div className="circule"></div>
                                         <label className="text-col_home-course">
                                             <p>Уровень знаний</p>
-                                            <p>нормальный</p>
+                                            <p>{cat?.name}</p>
                                         </label>
                                     </div>
                                     <div className="column_home-cours">
@@ -159,7 +166,7 @@ const Course: FC = ({params}:any) => {
                                 }
                                 {
                                     course_user_have && user?.role === 'Ученик' ?
-                                        <button className="btn btn_home-cours">
+                                        <button className="btn btn_home-cours" onClick={() => router.push(`/course_education/${course?.data.id}`)}>
                                             Перейти к обучению
                                         </button>
                                     : null

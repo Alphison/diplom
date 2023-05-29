@@ -127,7 +127,14 @@ const EditCourse:FC = ({params}:any) => {
         resolver: yupResolver(formSchema)
       });
 
-    
+      if(!course){
+        return (
+            <div className="loader-wrapper">
+                <Loader />
+            </div>
+        )
+      }
+        
   return (
     <motion.form className='add-course__wrapper' onSubmit={(e) => submit(e)} variants={animStat} initial={'hidden'} animate={'visible'}>
         <h1 className='zag-page-edit'>Редактирование курса</h1>

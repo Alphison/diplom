@@ -16,6 +16,12 @@ import { useLessons } from 'store/useLessons'
 import { animH1 } from 'animation/animation'
 import { redirect } from 'next/navigation'
 import { uselogin } from 'store/useSign'
+import { SubmitHandler } from "react-hook-form/dist/types";
+
+type Inputs = {
+    name: string,
+    description: string,
+  };
 
 const AddLesson:FC = ({params}:any) => {
     const { user } = uselogin(state => ({
@@ -35,7 +41,6 @@ const AddLesson:FC = ({params}:any) => {
         }
     }
 
-    const [lesson, setLesson] = useState<LessonType>({name: '', description: '', course_id: params.id})
     const [foto, setFoto] = useState()
     const [fotos, setFotos] = useState<File[]>([])
     const [videos, setVideos] = useState<File[]>([])
@@ -45,13 +50,6 @@ const AddLesson:FC = ({params}:any) => {
         loading: state.loading,
         setStatus: state.setStatus
     }))
-
-    const handleInput = (e:any) => {
-        setLesson({...lesson, [e.target.name]: e.target.value})
-    }
-
-    useEffect(() => {
-    }, [])
 
     const [image, setImage] = useState('/images/null.png')
     const onImageChange = (event:any) => {
@@ -93,27 +91,32 @@ const AddLesson:FC = ({params}:any) => {
         }
     }
 
-    const submit = (e:any) => {
-        e.preventDefault()
+    const Submit: SubmitHandler<Inputs> = ({name, description}) => {
+        
         const data = new FormData() as any
-        data.append('name', lesson.name)
-        data.append('description', lesson.description)
+        data.append('name', name)
+        data.append('description', description)
         data.append('preview', foto)
-        data.append('img[]', fotos)
-        data.append('video[]', fotos)
+        // data.append('img[]', fotos)
+        // data.append('video[]', fotos)
         fotos.forEach(file => {
             data.append('img[]', file);
         });
         videos.forEach(file => {
             data.append('video[]', file);
         });
-        data.append('course_id', lesson.course_id)
+        data.append('course_id', params.id)
         fetchAddLesson(data)
     }
 
     const message = () => {
         if(status == 200){
             reset()
+            setFoto(undefined)
+            setFotos([])
+            setVideos([])
+            setImage('/images/null.png')
+            setImages([])
             return Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -137,14 +140,14 @@ const AddLesson:FC = ({params}:any) => {
           .required('Введите описание урока'),
       })
     
-    const { register, handleSubmit, formState:{errors, isValid}, reset } = useForm<LessonType>({
-        mode: 'onBlur',
+    const { register, handleSubmit, formState:{errors}, reset } = useForm<LessonType>({
+        mode: 'onSubmit',
         resolver: yupResolver(formSchema)
     });
 
   return (
     <div className='add-course__wrapper-wrapper'>
-        <motion.form className='add-course__wrapper add-course__wrapper' onSubmit={(e) => submit(e)} variants={animStat} initial={'hidden'} animate={'visible'} id='pagw-wrap'>
+        <motion.form className='add-course__wrapper add-course__wrapper' onSubmit={handleSubmit(Submit)} variants={animStat} initial={'hidden'} animate={'visible'} id='pagw-wrap'>
             <h1 className='zag__add-lesson'>Добавить урок</h1>
             <h3 className="name-image-input">
                 Обложка урока:
@@ -205,7 +208,7 @@ const AddLesson:FC = ({params}:any) => {
                 }
             </label>
             <label htmlFor="" className='label-add-course'>
-                <input {...register('name')} type="text" placeholder='Название курса' className='inp-text-add' onChange={(e) => handleInput(e)}/>
+                <input {...register('name')} type="text" placeholder='Название урока' className='inp-text-add' />
                 {errors?.name && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.name.message}</motion.p>}
             </label>
             <label htmlFor="" className='label-add-course'>
@@ -228,10 +231,10 @@ const AddLesson:FC = ({params}:any) => {
                 }
             </label>
             <label htmlFor="" className='label-add-course'>
-                <textarea {...register('description')} id="" placeholder='Описание урока' onChange={(e) => handleInput(e)}></textarea>
+                <textarea {...register('description')} id="" placeholder='Описание урока' ></textarea>
                 {errors?.description && <motion.p variants={animErrors} initial={'hidden'} animate={'show'} className='error'>{errors?.description.message}</motion.p>}
             </label>
-            <button className='btn-add-course' disabled={!isValid} onClick={(e) => submit(e)}>{loading ? <Loader /> : 'Добавить'}</button>
+            <button className='btn-add-course'>{loading ? <Loader /> : 'Добавить'}</button>
         </motion.form>
     </div>
   )

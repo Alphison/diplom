@@ -35,27 +35,24 @@ class LessonController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' =>'required|max:255',
-            'description' =>'required|max:255',
+            'description' =>'required',
             'course_id' =>'required',
-            'img.*' => 'required|image|mimes:jpeg,png,jpg|max:5120',
-            'preview' => 'required|image|mimes:jpeg,png,jpg|max:5120',
-            'video.*' => 'required|mimes:mp4,mov|max:20000'
+            'img.*' => 'required|image|mimes:jpeg,png,jpg',
+            'preview' => 'required|image|mimes:jpeg,png,jpg',
+            'video.*' => 'required|mimetypes:video/mp4'
         ],
         [
             'img.*' => [
                 'image' => 'Файл должен быть изображением',
                 'mimes' => 'Изображение должно быть формата jpeg, png, jpg',
-                'max' => 'Максимальный размер 5 мб',
                 'required' => 'Выберите изображение'
             ],
             'video.*' => [
-                'mimes' => 'Видео должно быть формата mp4,mov',
-                'max' => 'Максимальный размер 20 мб',
+                'mimetypes' => 'Видео должно быть формата mp4',
                 'required' => 'Выберите видео'
             ],
             'preview.image' => 'Файл должен быть изображением',
             'preview.mimes' => 'Изображение должно быть формата jpeg, png, jpg',
-            'preview.max' => 'Максимальный размер 5 мб',
             'preview.required' => 'Выберите изображение',
         ]
         );

@@ -11,11 +11,12 @@ import { uselogin } from '../../store/useSign';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import Image from 'next/image';
-import {redirect} from 'next/navigation'
+import {redirect, useRouter} from 'next/navigation'
 import Hamburger from 'hamburger-react';
 
 
 const Navbar = () => {
+  const router = useRouter()
     const ctx = useContext(MyContext)
 
     const { getToken, access_token, fetchUser, user, fetchLogout } = uselogin(state => ({
@@ -36,7 +37,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
       fetchLogout()
-      redirect('/sign')
+      router.push('/sign')
     }
 
     const src = `${process.env.NEXT_PUBLIC_API}${user?.ava}`;
@@ -78,7 +79,7 @@ const Navbar = () => {
         }
         <Link href="/" className="menu-item"><AiFillHome />Главная</Link>
         <Link href="/courses" className="menu-item"><IoIosSchool />Курсы</Link>
-        <Link href="#" className="menu-item"><AiFillInfoCircle />О школе</Link>
+        <Link href="/document.pdf" target="_blank" className="menu-item"><AiFillInfoCircle />Лицензионное соглашение</Link>
         {
           access_token ? <button className="menu-item logout-item" onClick={() => handleLogout()}><RiLogoutBoxFill />Выйти</button>
           : <Link href="/sign" className="menu-item"><GoSignIn />Войти</Link>
